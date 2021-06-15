@@ -43,31 +43,31 @@ class Restaurant extends Equatable {
       distance: 0.1,
     ),
     Restaurant(
-      name: 'Golden Ice Gelato Artigianale',
+      name: 'Il Panino del Laghetto',
       imageUrl:
-          'https://images.unsplash.com/photo-1479044769763-c28e05b5baa5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      tags: ['Italian', 'Dessert', 'Ice Cream'],
+          'https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+      tags: ['Italian', 'Fast Food'],
       deliveryTime: 30,
       deliveryFee: 2.99,
       distance: 0.1,
     ),
     Restaurant(
-      name: 'Golden Ice Gelato Artigianale',
+      name: 'Viaggi Nel Gusto',
       imageUrl:
-          'https://images.unsplash.com/photo-1479044769763-c28e05b5baa5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      tags: ['Italian', 'Dessert', 'Ice Cream'],
+          'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80',
+      tags: ['Italian', 'Pizza'],
       deliveryTime: 30,
       deliveryFee: 2.99,
       distance: 0.1,
     ),
     Restaurant(
-      name: 'Golden Ice Gelato Artigianale',
+      name: 'Tandoori Bites',
       imageUrl:
-          'https://images.unsplash.com/photo-1479044769763-c28e05b5baa5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      tags: ['Italian', 'Dessert', 'Ice Cream'],
+          'https://images.unsplash.com/photo-1428515613728-6b4607e44363?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+      tags: ['Indian', 'Asian'],
       deliveryTime: 30,
       deliveryFee: 2.99,
-      distance: 0.1,
+      distance: 0.4,
     )
   ];
 }
