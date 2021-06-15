@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_food_delivery_app/models/menu_item_model.dart';
 
 class Restaurant extends Equatable {
   final String name;
   final String imageUrl;
   final List<String> tags;
-  // final List<MenuItem> menuItems; // TODO: Create MenuItem class
+  final List<MenuItem> menuItems;
   final int deliveryTime;
   final double deliveryFee;
   final double distance; // TODO: Calculate distance between user and restaurant
@@ -13,7 +14,7 @@ class Restaurant extends Equatable {
     required this.name,
     required this.imageUrl,
     required this.tags,
-    // required this.menuItems,
+    required this.menuItems,
     required this.deliveryTime,
     required this.deliveryFee,
     required this.distance,
@@ -25,7 +26,7 @@ class Restaurant extends Equatable {
       name,
       imageUrl,
       tags,
-      // menuItems,
+      menuItems,
       deliveryTime,
       deliveryFee,
       distance,
@@ -37,7 +38,14 @@ class Restaurant extends Equatable {
       name: 'Golden Ice Gelato Artigianale',
       imageUrl:
           'https://images.unsplash.com/photo-1479044769763-c28e05b5baa5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      tags: ['Italian', 'Dessert', 'Ice Cream'],
+      tags: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 1)
+          .map((menuItem) => menuItem.category)
+          .toSet()
+          .toList(),
+      menuItems: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 1)
+          .toList(),
       deliveryTime: 30,
       deliveryFee: 2.99,
       distance: 0.1,
@@ -46,7 +54,13 @@ class Restaurant extends Equatable {
       name: 'Il Panino del Laghetto',
       imageUrl:
           'https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      tags: ['Italian', 'Fast Food'],
+      tags: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 2)
+          .map((menuItem) => menuItem.category)
+          .toList(),
+      menuItems: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 2)
+          .toList(),
       deliveryTime: 30,
       deliveryFee: 2.99,
       distance: 0.1,
@@ -55,7 +69,14 @@ class Restaurant extends Equatable {
       name: 'Viaggi Nel Gusto',
       imageUrl:
           'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80',
-      tags: ['Italian', 'Pizza'],
+      tags: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 3)
+          .map((menuItem) => menuItem.category)
+          .toSet()
+          .toList(),
+      menuItems: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 3)
+          .toList(),
       deliveryTime: 30,
       deliveryFee: 2.99,
       distance: 0.1,
@@ -64,7 +85,14 @@ class Restaurant extends Equatable {
       name: 'Burgers',
       imageUrl:
           'https://images.unsplash.com/photo-1550547660-d9450f859349?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80',
-      tags: ['Burger', 'American'],
+      tags: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 4)
+          .map((menuItem) => menuItem.category)
+          .toSet()
+          .toList(),
+      menuItems: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 4)
+          .toList(),
       deliveryTime: 30,
       deliveryFee: 2.99,
       distance: 0.1,
@@ -73,7 +101,14 @@ class Restaurant extends Equatable {
       name: 'Tandoori Bites',
       imageUrl:
           'https://images.unsplash.com/photo-1428515613728-6b4607e44363?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      tags: ['Indian', 'Asian'],
+      tags: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 5)
+          .map((menuItem) => menuItem.category)
+          .toSet()
+          .toList(),
+      menuItems: MenuItem.menuItems
+          .where((menuItem) => menuItem.restaurantId == 5)
+          .toList(),
       deliveryTime: 30,
       deliveryFee: 2.99,
       distance: 0.4,

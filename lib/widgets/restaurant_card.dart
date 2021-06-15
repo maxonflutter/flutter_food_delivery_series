@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_app/models/models.dart';
 
+import 'restaurant_tags.dart';
+
 class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;
 
@@ -58,22 +60,7 @@ class RestaurantCard extends StatelessWidget {
                   Text(restaurant.name,
                       style: Theme.of(context).textTheme.headline5),
                   SizedBox(height: 5),
-                  Row(
-                    children: restaurant.tags
-                        .map(
-                          (tag) => restaurant.tags.indexOf(tag) ==
-                                  restaurant.tags.length - 1
-                              ? Text(
-                                  tag,
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                )
-                              : Text(
-                                  '$tag, ',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                        )
-                        .toList(),
-                  ),
+                  RestaurantTags(restaurant: restaurant),
                   SizedBox(height: 5),
                   Text(
                     '${restaurant.distance}km away - \$${restaurant.deliveryFee} delivery fee',
