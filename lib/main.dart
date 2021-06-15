@@ -9,6 +9,7 @@ import 'package:flutter_food_delivery_app/screens/screens.dart';
 import 'blocs/place/place_bloc.dart';
 import 'config/theme.dart';
 import 'config/app_router.dart';
+import 'screens/home/home_screen.dart';
 import 'screens/screens.dart';
 import 'simple_bloc_observer.dart';
 
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: theme(),
           onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: RestaurantDetailsScreen.routeName,
+          initialRoute: HomeScreen.routeName,
         ),
       ),
     );

@@ -5,17 +5,19 @@ import '../../widgets/widgets.dart';
 class RestaurantDetailsScreen extends StatelessWidget {
   static const String routeName = '/restaurant-details';
 
-  static Route route() {
+  static Route route({required Restaurant restaurant}) {
     return MaterialPageRoute(
-      builder: (_) => RestaurantDetailsScreen(),
+      builder: (_) => RestaurantDetailsScreen(restaurant: restaurant),
       settings: RouteSettings(name: routeName),
     );
   }
 
+  final Restaurant restaurant;
+
+  const RestaurantDetailsScreen({required this.restaurant});
+
   @override
   Widget build(BuildContext context) {
-    final Restaurant restaurant = Restaurant.restaurants[0];
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(

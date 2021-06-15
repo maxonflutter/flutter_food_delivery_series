@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food_delivery_app/screens/screens.dart';
 
-import '../screens/screens.dart';
-import '../screens/screens.dart';
+import '../models/models.dart';
 import '../screens/screens.dart';
 
 class AppRouter {
@@ -16,7 +15,8 @@ class AppRouter {
       case LocationScreen.routeName:
         return LocationScreen.route();
       case RestaurantDetailsScreen.routeName:
-        return RestaurantDetailsScreen.route();
+        return RestaurantDetailsScreen.route(
+            restaurant: settings.arguments as Restaurant);
       default:
         return _errorRoute();
     }
