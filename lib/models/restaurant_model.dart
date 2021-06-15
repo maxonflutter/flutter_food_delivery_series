@@ -61,6 +61,15 @@ class Restaurant extends Equatable {
       distance: 0.1,
     ),
     Restaurant(
+      name: 'Burgers',
+      imageUrl:
+          'https://images.unsplash.com/photo-1550547660-d9450f859349?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80',
+      tags: ['Burger', 'American'],
+      deliveryTime: 30,
+      deliveryFee: 2.99,
+      distance: 0.1,
+    ),
+    Restaurant(
       name: 'Tandoori Bites',
       imageUrl:
           'https://images.unsplash.com/photo-1428515613728-6b4607e44363?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',

@@ -39,7 +39,7 @@ class Category extends Equatable {
       ),
     ),
     Category(
-      name: 'Drinks',
+      name: 'Drink',
       image: Image.asset(
         'assets/juice.png',
       ),
