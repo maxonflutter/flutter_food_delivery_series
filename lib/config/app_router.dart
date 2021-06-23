@@ -14,6 +14,8 @@ class AppRouter {
         return HomeScreen.route();
       case LocationScreen.routeName:
         return LocationScreen.route();
+      case FilterScreen.routeName:
+        return FilterScreen.route();
       case RestaurantDetailsScreen.routeName:
         return RestaurantDetailsScreen.route(
             restaurant: settings.arguments as Restaurant);
