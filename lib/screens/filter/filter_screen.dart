@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food_delivery_app/models/category_filter_model.dart';
 import 'package:flutter_food_delivery_app/models/models.dart';
+import 'package:flutter_food_delivery_app/models/price_filter_model.dart';
 import 'package:flutter_food_delivery_app/models/price_model.dart';
 import 'package:flutter_food_delivery_app/widgets/widgets.dart';
 
@@ -28,14 +30,14 @@ class FilterScreen extends StatelessWidget {
                     color: Theme.of(context).accentColor,
                   ),
             ),
-            CustomPriceFilter(),
+            CustomPriceFilter(prices: Price.prices),
             Text(
               'Category',
               style: Theme.of(context).textTheme.headline4!.copyWith(
                     color: Theme.of(context).accentColor,
                   ),
             ),
-            CustomCategoryFilter(),
+            CustomCategoryFilter(categoryFilters: CategoryFilter.filters),
           ],
         ),
       ),
