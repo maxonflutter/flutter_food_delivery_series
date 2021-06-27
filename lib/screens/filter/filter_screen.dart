@@ -30,14 +30,14 @@ class FilterScreen extends StatelessWidget {
                     color: Theme.of(context).accentColor,
                   ),
             ),
-            CustomPriceFilter(prices: Price.prices),
+            CustomPriceFilter(),
             Text(
               'Category',
               style: Theme.of(context).textTheme.headline4!.copyWith(
                     color: Theme.of(context).accentColor,
                   ),
             ),
-            CustomCategoryFilter(categoryFilters: CategoryFilter.filters),
+            CustomCategoryFilter(),
           ],
         ),
       ),
