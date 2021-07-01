@@ -35,7 +35,9 @@ class RestaurantDetailsScreen extends StatelessWidget {
                 shape: RoundedRectangleBorder(),
                 primary: Theme.of(context).accentColor,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/basket');
+              },
               child: Text('Basket'),
             ),
           ],
