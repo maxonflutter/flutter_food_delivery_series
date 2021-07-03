@@ -12,7 +12,7 @@ class BasketLoading extends BasketState {
 class BasketLoaded extends BasketState {
   final Basket basket;
 
-  const BasketLoaded({this.basket = const Basket()});
+  BasketLoaded({required this.basket});
 
   @override
   List<Object> get props => [basket];

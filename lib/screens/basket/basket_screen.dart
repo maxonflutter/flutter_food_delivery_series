@@ -67,12 +67,29 @@ class BasketScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
-                  SizedBox(
-                    width: 100,
-                    child: SwitchListTile(
-                        dense: true,
-                        value: false,
-                        onChanged: (bool? newValue) {}),
+                  BlocBuilder<BasketBloc, BasketState>(
+                    builder: (context, state) {
+                      if (state is BasketLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (state is BasketLoaded) {
+                        return SizedBox(
+                          width: 100,
+                          child: SwitchListTile(
+                              dense: false,
+                              value: state.basket.cutlery,
+                              onChanged: (bool? newValue) {
+                                context.read<BasketBloc>().add(
+                                      ToggleSwitch(),
+                                    );
+                              }),
+                        );
+                      } else {
+                        return Text('Something went wrong.');
+                      }
+                    },
                   ),
                 ],
               ),
@@ -136,7 +153,7 @@ class BasketScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${state.basket.itemQuantity(state.basket.items).entries.elementAt(index).value}',
+                                    '${state.basket.itemQuantity(state.basket.items).entries.elementAt(index).value}x',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline5!

@@ -129,7 +129,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
                                       color: Theme.of(context).accentColor),
                                   onPressed: () {
                                     context.read<BasketBloc>()
-                                      ..add(BasketProductAdded(menuItem));
+                                      ..add(AddItem(menuItem));
                                   },
                                 );
                               },
