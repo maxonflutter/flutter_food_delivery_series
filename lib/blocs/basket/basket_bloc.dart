@@ -21,6 +21,8 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
       yield* _mapAddItemToState(event, state);
     } else if (event is RemoveItem) {
       yield* _mapRemoveItemToState(event, state);
+    } else if (event is RemoveAllItem) {
+      yield* _mapRemoveAllItemToState(event, state);
     } else if (event is ToggleSwitch) {
       yield* _mapToggleSwitchToState(event, state);
     }
@@ -58,6 +60,22 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
         yield BasketLoaded(
           basket: state.basket.copyWith(
             items: List.from(state.basket.items)..remove(event.item),
+          ),
+        );
+      } catch (_) {}
+    }
+  }
+
+  Stream<BasketState> _mapRemoveAllItemToState(
+    RemoveAllItem event,
+    BasketState state,
+  ) async* {
+    if (state is BasketLoaded) {
+      try {
+        yield BasketLoaded(
+          basket: state.basket.copyWith(
+            items: List.from(state.basket.items)
+              ..removeWhere((item) => item == event.item),
           ),
         );
       } catch (_) {}

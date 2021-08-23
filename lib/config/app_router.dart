@@ -18,6 +18,8 @@ class AppRouter {
         return FilterScreen.route();
       case BasketScreen.routeName:
         return BasketScreen.route();
+      case EditBasketScreen.routeName:
+        return EditBasketScreen.route();
       case RestaurantDetailsScreen.routeName:
         return RestaurantDetailsScreen.route(
             restaurant: settings.arguments as Restaurant);
