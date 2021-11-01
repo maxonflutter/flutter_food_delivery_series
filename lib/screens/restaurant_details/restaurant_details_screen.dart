@@ -35,7 +35,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 shape: RoundedRectangleBorder(),
-                primary: Theme.of(context).accentColor,
+                primary: Theme.of(context).colorScheme.secondary,
               ),
               onPressed: () {
                 Navigator.pushNamed(context, '/basket');
@@ -89,7 +89,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
           child: Text(
             restaurant.tags[index],
             style: Theme.of(context).textTheme.headline3!.copyWith(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
           ),
         ),
@@ -125,8 +125,11 @@ class RestaurantDetailsScreen extends StatelessWidget {
                             BlocBuilder<BasketBloc, BasketState>(
                               builder: (context, state) {
                                 return IconButton(
-                                  icon: Icon(Icons.add_circle,
-                                      color: Theme.of(context).accentColor),
+                                  icon: Icon(
+                                    Icons.add_circle,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
                                   onPressed: () {
                                     context.read<BasketBloc>()
                                       ..add(AddItem(menuItem));

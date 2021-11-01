@@ -12,7 +12,7 @@ ThemeData theme() {
       surface: Color(0xFFFFFFFF),
       error: Color(0x000000),
       brightness: Brightness.light,
-      onPrimary: Color(0xFF2b2e4a),
+      onPrimary: Color(0xFFFFFFFF),
       onSecondary: Color(0xFFFFFFFF),
       onError: Color(0xFF2b2e4a),
       onBackground: Color(0xFF2b2e4a),

@@ -35,7 +35,7 @@ class BasketScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 shape: RoundedRectangleBorder(),
-                primary: Theme.of(context).accentColor,
+                primary: Theme.of(context).colorScheme.secondary,
               ),
               child: Text('Apply'),
               onPressed: () {},
@@ -51,7 +51,7 @@ class BasketScreen extends StatelessWidget {
             Text(
               'Cutlery',
               style: Theme.of(context).textTheme.headline4!.copyWith(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
             ),
             Container(
@@ -103,7 +103,7 @@ class BasketScreen extends StatelessWidget {
             Text(
               'Items',
               style: Theme.of(context).textTheme.headline4!.copyWith(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
             ),
             BlocBuilder<BasketBloc, BasketState>(
@@ -164,7 +164,9 @@ class BasketScreen extends StatelessWidget {
                                         .textTheme
                                         .headline5!
                                         .copyWith(
-                                          color: Theme.of(context).accentColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
                                         ),
                                   ),
                                   SizedBox(
@@ -222,7 +224,8 @@ class BasketScreen extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .headline6!
-                              .copyWith(color: Theme.of(context).primaryColor),
+                              .copyWith(
+                                  color: Theme.of(context).colorScheme.primary),
                         ),
                       ),
                     ],
@@ -258,7 +261,8 @@ class BasketScreen extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .headline6!
-                              .copyWith(color: Theme.of(context).primaryColor),
+                              .copyWith(
+                                  color: Theme.of(context).colorScheme.primary),
                         ),
                       ),
                     ],
@@ -324,7 +328,9 @@ class BasketScreen extends StatelessWidget {
                                   .textTheme
                                   .headline5!
                                   .copyWith(
-                                      color: Theme.of(context).primaryColor),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
                             ),
                             Text(
                               '\$${state.basket.totalString}',
@@ -332,7 +338,9 @@ class BasketScreen extends StatelessWidget {
                                   .textTheme
                                   .headline5!
                                   .copyWith(
-                                      color: Theme.of(context).primaryColor),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
                             ),
                           ],
                         ),

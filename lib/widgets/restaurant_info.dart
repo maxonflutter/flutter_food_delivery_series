@@ -22,7 +22,7 @@ class RestaurantInformation extends StatelessWidget {
           Text(
             restaurant.name,
             style: Theme.of(context).textTheme.headline3!.copyWith(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
           ),
           SizedBox(height: 10),
