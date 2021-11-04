@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/autocomplete/autocomplete_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/basket/basket_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/filter/filter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/geolocation/geolocation_bloc.dart';
-import 'package:flutter_food_delivery_app/repositories/geolocation/geolocation_repository.dart';
-import 'package:flutter_food_delivery_app/repositories/places/places_repository.dart';
-import 'package:flutter_food_delivery_app/screens/screens.dart';
 
-import 'blocs/place/place_bloc.dart';
+import 'blocs/blocs.dart';
+import 'repositories/repositories.dart';
 import 'config/theme.dart';
 import 'config/app_router.dart';
-import 'screens/home/home_screen.dart';
 import 'screens/screens.dart';
 import 'simple_bloc_observer.dart';
 

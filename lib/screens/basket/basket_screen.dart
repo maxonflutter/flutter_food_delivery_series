@@ -28,20 +28,21 @@ class BasketScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
-            child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
-                shape: RoundedRectangleBorder(),
-                primary: Theme.of(context).colorScheme.secondary,
-              ),
-              child: Text('Apply'),
-              onPressed: () {},
-            )
-          ],
-        )),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  shape: RoundedRectangleBorder(),
+                  primary: Theme.of(context).colorScheme.secondary,
+                ),
+                child: Text('Apply'),
+                onPressed: () {},
+              )
+            ],
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -246,26 +247,44 @@ class BasketScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 20),
-                      Text(
-                        'Do you have a voucher?',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Apply',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline6!
-                              .copyWith(
-                                  color: Theme.of(context).colorScheme.primary),
-                        ),
-                      ),
-                    ],
+                  BlocBuilder<BasketBloc, BasketState>(
+                    builder: (context, state) {
+                      if (state is BasketLoaded) {
+                        return (state.basket.voucher == null)
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: 20),
+                                  Text(
+                                    'Do you have a voucher?',
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(context, '/vouchers');
+                                    },
+                                    child: Text(
+                                      'Apply',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6!
+                                          .copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Text(
+                                'Your voucher is applied!',
+                                style: Theme.of(context).textTheme.headline6,
+                              );
+                      } else {
+                        return Text('Something went wrong');
+                      }
+                    },
                   ),
                   SvgPicture.asset('assets/delivery_time.svg'),
                 ],
