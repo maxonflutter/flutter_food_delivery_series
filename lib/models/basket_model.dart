@@ -6,22 +6,26 @@ class Basket extends Equatable {
   final List<MenuItem> items;
   final bool cutlery;
   final Voucher? voucher;
+  final DeliveryTime? deliveryTime;
 
   Basket({
     this.items = const <MenuItem>[],
     this.cutlery = false,
     this.voucher,
+    this.deliveryTime,
   });
 
   Basket copyWith({
     List<MenuItem>? items,
     bool? cutlery,
     Voucher? voucher,
+    DeliveryTime? deliveryTime,
   }) {
     return Basket(
       items: items ?? this.items,
       cutlery: cutlery ?? this.cutlery,
       voucher: voucher ?? this.voucher,
+      deliveryTime: deliveryTime ?? this.deliveryTime,
     );
   }
 
@@ -30,6 +34,7 @@ class Basket extends Equatable {
         items,
         cutlery,
         voucher,
+        deliveryTime,
       ];
 
   Map itemQuantity(items) {

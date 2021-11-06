@@ -31,7 +31,9 @@ dependencies:
   equatable:  ^2.0.3
   http: ^0.13.4
   flutter_rating_bar: ^4.0.0
-  geolocator: ^7.7.1
+  geolocator: ^7.7.1  
+  intl: ^0.17.0
+
 
 
 
