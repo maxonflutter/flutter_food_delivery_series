@@ -87,6 +87,8 @@ class BasketScreen extends StatelessWidget {
                           child: SwitchListTile(
                               dense: false,
                               value: state.basket.cutlery,
+                              activeColor:
+                                  Theme.of(context).colorScheme.primary,
                               onChanged: (bool? newValue) {
                                 context.read<BasketBloc>().add(
                                       ToggleSwitch(),

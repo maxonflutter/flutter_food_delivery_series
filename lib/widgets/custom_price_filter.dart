@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_food_delivery_app/blocs/filter/filter_bloc.dart';
-import 'package:flutter_food_delivery_app/models/price_model.dart';
 
 class CustomPriceFilter extends StatelessWidget {
   const CustomPriceFilter({
@@ -25,7 +24,7 @@ class CustomPriceFilter extends StatelessWidget {
                   (price) => InkWell(
                     onTap: () {
                       context.read<FilterBloc>().add(
-                            PriceFilterUpdated(
+                            UpdatePriceFilter(
                               priceFilter: state.filter.priceFilters[price.key]
                                   .copyWith(
                                       value: !state.filter
@@ -44,7 +43,10 @@ class CustomPriceFilter extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: state.filter.priceFilters[price.key].value
-                            ? Theme.of(context).primaryColor.withAlpha(100)
+                            ? Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withAlpha(100)
                             : Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),

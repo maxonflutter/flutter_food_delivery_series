@@ -9,8 +9,12 @@ import 'screens/screens.dart';
 import 'simple_bloc_observer.dart';
 
 void main() async {
-  Bloc.observer = SimpleBlocObserver();
-  runApp(MyApp());
+  BlocOverrides.runZoned(
+    () {
+      runApp(MyApp());
+    },
+    blocObserver: SimpleBlocObserver(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -41,7 +45,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => FilterBloc()
               ..add(
-                FilterLoad(),
+                LoadFilter(),
               ),
           ),
           BlocProvider(

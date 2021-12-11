@@ -7,24 +7,24 @@ abstract class FilterEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FilterLoad extends FilterEvent {
+class LoadFilter extends FilterEvent {
   @override
   List<Object> get props => [];
 }
 
-class CategoryFilterUpdated extends FilterEvent {
+class UpdateCategoryFilter extends FilterEvent {
   final CategoryFilter categoryFilter;
 
-  const CategoryFilterUpdated({required this.categoryFilter});
+  const UpdateCategoryFilter({required this.categoryFilter});
 
   @override
   List<Object> get props => [categoryFilter];
 }
 
-class PriceFilterUpdated extends FilterEvent {
+class UpdatePriceFilter extends FilterEvent {
   final PriceFilter priceFilter;
 
-  const PriceFilterUpdated({required this.priceFilter});
+  const UpdatePriceFilter({required this.priceFilter});
 
   @override
   List<Object> get props => [priceFilter];

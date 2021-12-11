@@ -9,115 +9,125 @@ part 'basket_event.dart';
 part 'basket_state.dart';
 
 class BasketBloc extends Bloc<BasketEvent, BasketState> {
-  BasketBloc() : super(BasketLoading());
-
-  @override
-  Stream<BasketState> mapEventToState(
-    BasketEvent event,
-  ) async* {
-    if (event is StartBasket) {
-      yield* _mapStartBasketToState();
-    } else if (event is AddItem) {
-      yield* _mapAddItemToState(event, state);
-    } else if (event is RemoveItem) {
-      yield* _mapRemoveItemToState(event, state);
-    } else if (event is RemoveAllItem) {
-      yield* _mapRemoveAllItemToState(event, state);
-    } else if (event is ToggleSwitch) {
-      yield* _mapToggleSwitchToState(event, state);
-    } else if (event is AddVoucher) {
-      yield* _mapAddVoucherToState(event, state);
-    } else if (event is SelectDeliveryTime) {
-      yield* _mapSelectDeliveryTimeToState(event, state);
-    }
+  BasketBloc() : super(BasketLoading()) {
+    on<StartBasket>(_onStartBasket);
+    on<AddItem>(_onAddItem);
+    on<RemoveItem>(_onRemoveItem);
+    on<RemoveAllItem>(_onRemoveAllItem);
+    on<ToggleSwitch>(_onToggleSwitch);
+    on<AddVoucher>(_onAddVoucher);
+    on<SelectDeliveryTime>(_onSelectDeliveryTime);
   }
 
-  Stream<BasketState> _mapStartBasketToState() async* {
-    yield BasketLoading();
+  void _onStartBasket(
+    StartBasket event,
+    Emitter<BasketState> emit,
+  ) async {
+    emit(BasketLoading());
     try {
       await Future<void>.delayed(const Duration(seconds: 1));
-      yield BasketLoaded(basket: Basket());
+      emit(BasketLoaded(basket: Basket()));
     } catch (_) {}
   }
 
-  Stream<BasketState> _mapAddItemToState(
+  void _onAddItem(
     AddItem event,
-    BasketState state,
-  ) async* {
+    Emitter<BasketState> emit,
+  ) {
+    final state = this.state;
     if (state is BasketLoaded) {
       try {
-        yield BasketLoaded(
-          basket: state.basket.copyWith(
-            items: List.from(state.basket.items)..add(event.item),
+        emit(
+          BasketLoaded(
+            basket: state.basket.copyWith(
+              items: List.from(state.basket.items)..add(event.item),
+            ),
           ),
         );
       } catch (_) {}
     }
   }
 
-  Stream<BasketState> _mapRemoveItemToState(
+  void _onRemoveItem(
     RemoveItem event,
-    BasketState state,
-  ) async* {
+    Emitter<BasketState> emit,
+  ) {
+    final state = this.state;
     if (state is BasketLoaded) {
       try {
-        yield BasketLoaded(
-          basket: state.basket.copyWith(
-            items: List.from(state.basket.items)..remove(event.item),
+        emit(
+          BasketLoaded(
+            basket: state.basket.copyWith(
+              items: List.from(state.basket.items)..remove(event.item),
+            ),
           ),
         );
       } catch (_) {}
     }
   }
 
-  Stream<BasketState> _mapRemoveAllItemToState(
+  void _onRemoveAllItem(
     RemoveAllItem event,
-    BasketState state,
-  ) async* {
+    Emitter<BasketState> emit,
+  ) {
+    final state = this.state;
+
     if (state is BasketLoaded) {
       try {
-        yield BasketLoaded(
-          basket: state.basket.copyWith(
-            items: List.from(state.basket.items)
-              ..removeWhere((item) => item == event.item),
+        emit(
+          BasketLoaded(
+            basket: state.basket.copyWith(
+              items: List.from(state.basket.items)
+                ..removeWhere((item) => item == event.item),
+            ),
           ),
         );
       } catch (_) {}
     }
   }
 
-  Stream<BasketState> _mapToggleSwitchToState(
+  void _onToggleSwitch(
     ToggleSwitch event,
-    BasketState state,
-  ) async* {
+    Emitter<BasketState> emit,
+  ) {
+    final state = this.state;
     if (state is BasketLoaded) {
-      try {
-        yield BasketLoaded(
-            basket: state.basket.copyWith(cutlery: !state.basket.cutlery));
-      } catch (_) {}
+      emit(
+        BasketLoaded(
+          basket: state.basket.copyWith(cutlery: !state.basket.cutlery),
+        ),
+      );
     }
   }
 
-  Stream<BasketState> _mapAddVoucherToState(
+  void _onAddVoucher(
     AddVoucher event,
-    BasketState state,
-  ) async* {
+    Emitter<BasketState> emit,
+  ) {
+    final state = this.state;
     if (state is BasketLoaded) {
       try {
-        yield BasketLoaded(
-            basket: state.basket.copyWith(voucher: event.voucher));
+        emit(
+          BasketLoaded(
+            basket: state.basket.copyWith(voucher: event.voucher),
+          ),
+        );
       } catch (_) {}
     }
   }
 
-  Stream<BasketState> _mapSelectDeliveryTimeToState(
+  void _onSelectDeliveryTime(
     SelectDeliveryTime event,
-    BasketState state,
-  ) async* {
+    Emitter<BasketState> emit,
+  ) {
+    final state = this.state;
     if (state is BasketLoaded) {
       try {
-        yield BasketLoaded(
-            basket: state.basket.copyWith(deliveryTime: event.deliveryTime));
+        emit(
+          BasketLoaded(
+            basket: state.basket.copyWith(deliveryTime: event.deliveryTime),
+          ),
+        );
       } catch (_) {}
     }
   }

@@ -43,9 +43,10 @@ class CustomCategoryFilter extends StatelessWidget {
                       height: 25,
                       child: Checkbox(
                         value: state.filter.categoryFilters[index].value,
+                        activeColor: Theme.of(context).colorScheme.primary,
                         onChanged: (bool? newValue) {
                           context.read<FilterBloc>().add(
-                                CategoryFilterUpdated(
+                                UpdateCategoryFilter(
                                   categoryFilter: state
                                       .filter.categoryFilters[index]
                                       .copyWith(

@@ -25,7 +25,7 @@ class EditBasketScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
                   shape: RoundedRectangleBorder(),
-                  primary: Theme.of(context).accentColor,
+                  primary: Theme.of(context).colorScheme.primary,
                 ),
                 child: Text('Done'),
                 onPressed: () {
@@ -44,7 +44,7 @@ class EditBasketScreen extends StatelessWidget {
             Text(
               'Items',
               style: Theme.of(context).textTheme.headline4!.copyWith(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
             ),
             BlocBuilder<BasketBloc, BasketState>(
@@ -105,7 +105,9 @@ class EditBasketScreen extends StatelessWidget {
                                         .textTheme
                                         .headline5!
                                         .copyWith(
-                                          color: Theme.of(context).accentColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                   ),
                                   SizedBox(
