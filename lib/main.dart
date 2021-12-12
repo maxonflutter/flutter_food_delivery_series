@@ -1,5 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_food_delivery_app/blocs/voucher/voucher_bloc.dart';
+import 'package:flutter_food_delivery_app/repositories/voucher/voucher_repository.dart';
 
 import 'blocs/blocs.dart';
 import 'repositories/repositories.dart';
@@ -9,6 +12,8 @@ import 'screens/screens.dart';
 import 'simple_bloc_observer.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   BlocOverrides.runZoned(
     () {
       runApp(MyApp());
@@ -49,11 +54,19 @@ class MyApp extends StatelessWidget {
               ),
           ),
           BlocProvider(
-            create: (context) => BasketBloc()
-              ..add(
-                StartBasket(),
-              ),
-          )
+            create: (context) =>
+                VoucherBloc(voucherRepository: VoucherRepository())
+                  ..add(
+                    LoadVouchers(),
+                  ),
+          ),
+          BlocProvider(
+            create: (context) =>
+                BasketBloc(voucherBloc: BlocProvider.of<VoucherBloc>(context))
+                  ..add(
+                    StartBasket(),
+                  ),
+          ),
         ],
         child: MaterialApp(
           title: 'FoodDelivery',
