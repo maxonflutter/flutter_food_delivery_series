@@ -52,24 +52,24 @@ class FilterScreen extends StatelessWidget {
                           .map((filter) => filter.price.price)
                           .toList();
 
-                      List<Restaurant> restaurants = Restaurant.restaurants
-                          .where(
-                            (restaurant) => categories.any(
-                              (category) => restaurant.tags.contains(category),
-                            ),
-                          )
-                          .where(
-                            (restaurant) => prices.any(
-                              (price) =>
-                                  restaurant.priceCategory.contains(price),
-                            ),
-                          )
-                          .toList();
+                      // List<Restaurant> restaurants = Restaurant.restaurants
+                      //     .where(
+                      //       (restaurant) => categories.any(
+                      //         (category) => restaurant.tags.contains(category),
+                      //       ),
+                      //     )
+                      //     .where(
+                      //       (restaurant) => prices.any(
+                      //         (price) =>
+                      //             restaurant.priceCategory.contains(price),
+                      //       ),
+                      //     )
+                      //     .toList();
 
                       Navigator.pushNamed(
                         context,
                         '/restaurant-listing',
-                        arguments: restaurants,
+                        // arguments: restaurants,
                       );
                     },
                   );

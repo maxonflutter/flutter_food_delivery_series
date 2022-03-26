@@ -1,55 +1,68 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 class Category extends Equatable {
-  final int id;
+  final String id;
   final String name;
-  final Image image;
+  final String description;
+  final String imageUrl;
+  final int index;
 
   Category({
     required this.id,
     required this.name,
-    required this.image,
+    required this.description,
+    required this.imageUrl,
+    required this.index,
   });
 
   @override
-  List<Object?> get props => [id, name, image];
+  List<Object?> get props => [id, name, description, imageUrl, index];
+
+  factory Category.fromSnapshot(Map<String, dynamic> snap) {
+    return Category(
+      id: snap['id'].toString(),
+      name: snap['name'],
+      description: snap['description'],
+      imageUrl: snap['imageUrl'],
+      index: snap['index'],
+    );
+  }
 
   static List<Category> categories = [
     Category(
-      id: 1,
+      id: '1',
       name: 'Pizza',
-      image: Image.asset(
-        'assets/pizza.png',
-      ),
+      description: 'This is a test description',
+      imageUrl: 'assets/pizza.png',
+      index: 0,
     ),
     Category(
-      id: 2,
-      name: 'Burger',
-      image: Image.asset(
-        'assets/burger.png',
-      ),
+      id: '2',
+      name: 'Burgers',
+      description: 'This is a test description',
+      imageUrl: 'assets/burger.png',
+      index: 1,
     ),
     Category(
-      id: 3,
-      name: 'Dessert',
-      image: Image.asset(
-        'assets/pancake.png',
-      ),
+      id: '3',
+      name: 'Desserts',
+      description: 'This is a test description',
+      imageUrl: 'assets/pancake.png',
+      index: 2,
     ),
     Category(
-      id: 4,
-      name: 'Salad',
-      image: Image.asset(
-        'assets/avocado.png',
-      ),
+      id: '4',
+      name: 'Drinks',
+      description: 'This is a test description',
+      imageUrl: 'assets/juice.png',
+      index: 3,
     ),
     Category(
-      id: 5,
-      name: 'Drink',
-      image: Image.asset(
-        'assets/juice.png',
-      ),
+      id: '5',
+      name: 'Salads',
+      description: 'This is a test description',
+      imageUrl: 'assets/avocado.png',
+      index: 4,
     ),
   ];
 }

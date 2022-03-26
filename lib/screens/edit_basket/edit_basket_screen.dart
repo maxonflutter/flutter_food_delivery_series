@@ -55,7 +55,7 @@ class EditBasketScreen extends StatelessWidget {
                   );
                 }
                 if (state is BasketLoaded) {
-                  return state.basket.items.length == 0
+                  return state.basket.products.length == 0
                       ? Container(
                           width: double.infinity,
                           margin: const EdgeInsets.only(top: 5),
@@ -80,7 +80,7 @@ class EditBasketScreen extends StatelessWidget {
                       : ListView.builder(
                           shrinkWrap: true,
                           itemCount: state.basket
-                              .itemQuantity(state.basket.items)
+                              .itemQuantity(state.basket.products)
                               .keys
                               .length,
                           itemBuilder: (context, index) {
@@ -100,7 +100,7 @@ class EditBasketScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${state.basket.itemQuantity(state.basket.items).entries.elementAt(index).value}x',
+                                    '${state.basket.itemQuantity(state.basket.products).entries.elementAt(index).value}x',
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline5!
@@ -115,7 +115,7 @@ class EditBasketScreen extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      '${state.basket.itemQuantity(state.basket.items).keys.elementAt(index).name}',
+                                      '${state.basket.itemQuantity(state.basket.products).keys.elementAt(index).name}',
                                       textAlign: TextAlign.left,
                                       style:
                                           Theme.of(context).textTheme.headline6,
@@ -126,8 +126,9 @@ class EditBasketScreen extends StatelessWidget {
                                     onPressed: () {
                                       context.read<BasketBloc>()
                                         ..add(
-                                          RemoveItem(state.basket
-                                              .itemQuantity(state.basket.items)
+                                          RemoveProduct(state.basket
+                                              .itemQuantity(
+                                                  state.basket.products)
                                               .keys
                                               .elementAt(index)),
                                         );
@@ -139,8 +140,9 @@ class EditBasketScreen extends StatelessWidget {
                                     onPressed: () {
                                       context.read<BasketBloc>()
                                         ..add(
-                                          AddItem(state.basket
-                                              .itemQuantity(state.basket.items)
+                                          AddProduct(state.basket
+                                              .itemQuantity(
+                                                  state.basket.products)
                                               .keys
                                               .elementAt(index)),
                                         );
@@ -150,11 +152,12 @@ class EditBasketScreen extends StatelessWidget {
                                   IconButton(
                                     visualDensity: VisualDensity.compact,
                                     onPressed: () {
-                                      print(state.basket.items[index]);
+                                      print(state.basket.products[index]);
                                       context.read<BasketBloc>()
                                         ..add(
-                                          RemoveAllItem(state.basket
-                                              .itemQuantity(state.basket.items)
+                                          RemoveAllProduct(state.basket
+                                              .itemQuantity(
+                                                  state.basket.products)
                                               .keys
                                               .elementAt(index)),
                                         );

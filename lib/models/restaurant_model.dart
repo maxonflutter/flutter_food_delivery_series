@@ -1,125 +1,84 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_food_delivery_app/models/menu_item_model.dart';
 
+import 'category_model.dart';
+import 'opening_hours_model.dart';
+import 'product_model.dart';
+
 class Restaurant extends Equatable {
+  final String id;
   final String name;
   final String imageUrl;
+  final String description;
   final List<String> tags;
-  final List<MenuItem> menuItems;
+  final List<Category> categories;
+  final List<Product> products;
+  final List<OpeningHours> openingHours;
   final int deliveryTime;
   final String priceCategory;
   final double deliveryFee;
-  final double distance; // TODO: Calculate distance between user and restaurant
+  final double distance;
 
   const Restaurant({
+    required this.id,
     required this.name,
+    required this.description,
     required this.imageUrl,
     required this.tags,
-    required this.menuItems,
-    required this.deliveryTime,
-    required this.priceCategory,
-    required this.deliveryFee,
-    required this.distance,
+    required this.categories,
+    required this.products,
+    required this.openingHours,
+    this.deliveryTime = 10,
+    this.priceCategory = '\$',
+    this.deliveryFee = 10,
+    this.distance = 15,
   });
 
+  factory Restaurant.fromSnapshot(DocumentSnapshot snap) {
+    return Restaurant(
+      id: snap.id,
+      name: snap['name'],
+      imageUrl: snap['imageUrl'],
+      description: snap['description'],
+      tags: (snap['tags'] as List).map(
+        (tag) {
+          return tag as String;
+        },
+      ).toList(),
+      categories: (snap['categories'] as List).map(
+        (category) {
+          return Category.fromSnapshot(category);
+        },
+      ).toList(),
+      products: (snap['products'] as List).map(
+        (product) {
+          return Product.fromSnapshot(product);
+        },
+      ).toList(),
+      openingHours: (snap['openingHours'] as List).map(
+        (openingHour) {
+          return OpeningHours.fromSnapshot(openingHour);
+        },
+      ).toList(),
+    );
+  }
+
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
+      id,
       name,
+      description,
       imageUrl,
       tags,
-      menuItems,
+      categories,
+      products,
+      openingHours,
       deliveryTime,
       priceCategory,
       deliveryFee,
       distance,
     ];
   }
-
-  static List<Restaurant> restaurants = [
-    Restaurant(
-      name: 'Golden Ice Gelato Artigianale',
-      imageUrl:
-          'https://images.unsplash.com/photo-1479044769763-c28e05b5baa5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      tags: MenuItem.menuItems
-          .where((menuItem) => menuItem.restaurantId == 1)
-          .map((menuItem) => menuItem.category)
-          .toSet()
-          .toList(),
-      menuItems: MenuItem.menuItems
-          .where((menuItem) => menuItem.restaurantId == 1)
-          .toList(),
-      deliveryTime: 30,
-      priceCategory: '\$',
-      deliveryFee: 2.99,
-      distance: 0.1,
-    ),
-    Restaurant(
-      name: 'Il Panino del Laghetto',
-      imageUrl:
-          'https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      tags: MenuItem.menuItems
-          .where((menuItem) => menuItem.restaurantId == 2)
-          .map((menuItem) => menuItem.category)
-          .toList(),
-      menuItems: MenuItem.menuItems
-          .where((menuItem) => menuItem.restaurantId == 2)
-          .toList(),
-      deliveryTime: 30,
-      priceCategory: '\$',
-      deliveryFee: 2.99,
-      distance: 0.1,
-    ),
-    Restaurant(
-      name: 'Viaggi Nel Gusto',
-      imageUrl:
-          'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80',
-      tags: MenuItem.menuItems
-          .where((menuItem) => menuItem.restaurantId == 3)
-          .map((menuItem) => menuItem.category)
-          .toSet()
-          .toList(),
-      menuItems: MenuItem.menuItems
-          .where((menuItem) => menuItem.restaurantId == 3)
-          .toList(),
-      deliveryTime: 30,
-      priceCategory: '\$',
-      deliveryFee: 2.99,
-      distance: 0.1,
-    ),
-    Restaurant(
-      name: 'Burgers',
-      imageUrl:
-          'https://images.unsplash.com/photo-1550547660-d9450f859349?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80',
-      tags: MenuItem.menuItems
-          .where((menuItem) => menuItem.restaurantId == 4)
-          .map((menuItem) => menuItem.category)
-          .toSet()
-          .toList(),
-      menuItems: MenuItem.menuItems
-          .where((menuItem) => menuItem.restaurantId == 4)
-          .toList(),
-      deliveryTime: 30,
-      priceCategory: '\$',
-      deliveryFee: 2.99,
-      distance: 0.1,
-    ),
-    Restaurant(
-      name: 'Tandoori Bites',
-      imageUrl:
-          'https://images.unsplash.com/photo-1428515613728-6b4607e44363?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      tags: MenuItem.menuItems
-          .where((menuItem) => menuItem.restaurantId == 5)
-          .map((menuItem) => menuItem.category)
-          .toSet()
-          .toList(),
-      menuItems: MenuItem.menuItems
-          .where((menuItem) => menuItem.restaurantId == 5)
-          .toList(),
-      deliveryTime: 30,
-      priceCategory: '\$',
-      deliveryFee: 2.99,
-      distance: 0.4,
-    )
-  ];
 }

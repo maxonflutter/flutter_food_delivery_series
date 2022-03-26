@@ -11,16 +11,16 @@ class CategoryBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Restaurant> restaurants = Restaurant.restaurants
-        .where((restaurant) => restaurant.tags.contains(category.name))
-        .toList();
+    // final List<Restaurant> restaurants = Restaurant.restaurants
+    //     .where((restaurant) => restaurant.tags.contains(category.name))
+    //     .toList();
 
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
           context,
           '/restaurant-listing',
-          arguments: restaurants,
+          // arguments: restaurants,
         );
       },
       child: Container(
@@ -47,7 +47,7 @@ class CategoryBox extends StatelessWidget {
             Positioned(
               top: 5,
               left: 7.5,
-              child: category.image,
+              child: Image.asset(category.imageUrl),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

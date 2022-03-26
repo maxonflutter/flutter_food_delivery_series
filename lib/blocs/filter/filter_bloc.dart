@@ -20,14 +20,14 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     LoadFilter event,
     Emitter<FilterState> emit,
   ) async {
-    emit(
-      FilterLoaded(
-        filter: Filter(
-          categoryFilters: CategoryFilter.filters,
-          priceFilters: PriceFilter.filters,
-        ),
-      ),
-    );
+    // emit(
+    //   FilterLoaded(
+    //     filter: Filter(
+    //       categoryFilters: CategoryFilter.filters,
+    //       priceFilters: PriceFilter.filters,
+    //     ),
+    //   ),
+    // );
   }
 
   void _onUpdateCategoryFilter(

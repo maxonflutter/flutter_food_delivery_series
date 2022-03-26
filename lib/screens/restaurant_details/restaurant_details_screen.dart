@@ -70,7 +70,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               itemCount: restaurant.tags.length,
               itemBuilder: (context, index) {
-                return _buildMenuItems(restaurant, context, index);
+                return _buildproducts(restaurant, context, index);
               },
             ),
           ],
@@ -79,25 +79,32 @@ class RestaurantDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItems(
-      Restaurant restaurant, BuildContext context, int index) {
+  Widget _buildproducts(
+    Restaurant restaurant,
+    BuildContext context,
+    int index,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ),
           child: Text(
-            restaurant.tags[index],
+            restaurant.categories[index].name,
             style: Theme.of(context).textTheme.headline3!.copyWith(
                   color: Theme.of(context).colorScheme.secondary,
                 ),
           ),
         ),
         Column(
-          children: restaurant.menuItems
-              .where((menuItem) => menuItem.category == restaurant.tags[index])
+          children: restaurant.products
+              .where((product) =>
+                  product.category == restaurant.categories[index].name)
               .map(
-                (menuItem) => Column(
+                (product) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
@@ -107,11 +114,11 @@ class RestaurantDetailsScreen extends StatelessWidget {
                         dense: true,
                         contentPadding: EdgeInsets.zero,
                         title: Text(
-                          menuItem.name,
+                          product.name,
                           style: Theme.of(context).textTheme.headline5,
                         ),
                         subtitle: Text(
-                          menuItem.description,
+                          product.description,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         trailing: Row(
@@ -119,7 +126,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              '\$${menuItem.price}',
+                              '\$${product.price}',
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             BlocBuilder<BasketBloc, BasketState>(
@@ -132,7 +139,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
                                   ),
                                   onPressed: () {
                                     context.read<BasketBloc>()
-                                      ..add(AddItem(menuItem));
+                                      ..add(AddProduct(product));
                                   },
                                 );
                               },
