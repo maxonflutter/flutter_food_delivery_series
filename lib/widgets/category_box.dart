@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_food_delivery_app/blocs/restaurants/restaurants_bloc.dart';
+
+import '/models/models.dart';
 
 class CategoryBox extends StatelessWidget {
   final Category category;
@@ -11,16 +14,24 @@ class CategoryBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final List<Restaurant> restaurants = Restaurant.restaurants
-    //     .where((restaurant) => restaurant.tags.contains(category.name))
-    //     .toList();
+    List<Restaurant> restaurants = context.select((RestaurantsBloc bloc) {
+      if (bloc.state is RestaurantsLoaded) {
+        return (bloc.state as RestaurantsLoaded).restaurants;
+      } else {
+        return <Restaurant>[];
+      }
+    });
+
+    final List<Restaurant> filteredRestaurants = restaurants
+        .where((restaurant) => restaurant.categories.contains(category))
+        .toList();
 
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
           context,
           '/restaurant-listing',
-          // arguments: restaurants,
+          arguments: filteredRestaurants,
         );
       },
       child: Container(
