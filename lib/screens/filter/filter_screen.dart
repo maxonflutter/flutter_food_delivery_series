@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/filter/filter_bloc.dart';
-import 'package:flutter_food_delivery_app/models/category_filter_model.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
-import 'package:flutter_food_delivery_app/models/price_filter_model.dart';
-import 'package:flutter_food_delivery_app/models/price_model.dart';
-import 'package:flutter_food_delivery_app/widgets/widgets.dart';
+
+import '/blocs/blocs.dart';
+import '/widgets/widgets.dart';
 
 class FilterScreen extends StatelessWidget {
   static const String routeName = '/filters';
@@ -42,34 +39,11 @@ class FilterScreen extends StatelessWidget {
                     ),
                     child: Text('Apply'),
                     onPressed: () {
-                      var categories = state.filter.categoryFilters
-                          .where((filter) => filter.value)
-                          .map((filter) => filter.category.name)
-                          .toList();
-
-                      var prices = state.filter.priceFilters
-                          .where((filter) => filter.value)
-                          .map((filter) => filter.price.price)
-                          .toList();
-
-                      // List<Restaurant> restaurants = Restaurant.restaurants
-                      //     .where(
-                      //       (restaurant) => categories.any(
-                      //         (category) => restaurant.tags.contains(category),
-                      //       ),
-                      //     )
-                      //     .where(
-                      //       (restaurant) => prices.any(
-                      //         (price) =>
-                      //             restaurant.priceCategory.contains(price),
-                      //       ),
-                      //     )
-                      //     .toList();
-
+                      print(state.filteredRestaurants);
                       Navigator.pushNamed(
                         context,
                         '/restaurant-listing',
-                        // arguments: restaurants,
+                        arguments: state.filteredRestaurants,
                       );
                     },
                   );

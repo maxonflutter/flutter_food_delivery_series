@@ -31,30 +31,30 @@ class Category extends Equatable {
   static List<Category> categories = [
     Category(
       id: '1',
-      name: 'Pizza',
+      name: 'Drinks',
       description: 'This is a test description',
-      imageUrl: 'assets/pizza.png',
+      imageUrl: 'assets/juice.png',
       index: 0,
     ),
     Category(
       id: '2',
-      name: 'Burgers',
+      name: 'Pizza',
       description: 'This is a test description',
-      imageUrl: 'assets/burger.png',
+      imageUrl: 'assets/pizza.png',
       index: 1,
     ),
     Category(
       id: '3',
-      name: 'Desserts',
+      name: 'Burgers',
       description: 'This is a test description',
-      imageUrl: 'assets/pancake.png',
+      imageUrl: 'assets/burger.png',
       index: 2,
     ),
     Category(
       id: '4',
-      name: 'Drinks',
+      name: 'Desserts',
       description: 'This is a test description',
-      imageUrl: 'assets/juice.png',
+      imageUrl: 'assets/pancake.png',
       index: 3,
     ),
     Category(

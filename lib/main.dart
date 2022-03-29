@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/restaurants/restaurants_bloc.dart';
 
 import 'blocs/blocs.dart';
 import 'repositories/repositories.dart';
@@ -55,10 +54,9 @@ class MyApp extends StatelessWidget {
               create: (context) => PlaceBloc(
                   placesRepository: context.read<PlacesRepository>())),
           BlocProvider(
-            create: (context) => FilterBloc()
-              ..add(
-                LoadFilter(),
-              ),
+            create: (context) => FilterBloc(
+              restaurantsBloc: context.read<RestaurantsBloc>(),
+            )..add(LoadFilter()),
           ),
           BlocProvider(
             create: (context) =>
