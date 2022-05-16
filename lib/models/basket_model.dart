@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_food_delivery_app/models/product_model.dart';
+import 'product_model.dart';
 
 import 'models.dart';
 

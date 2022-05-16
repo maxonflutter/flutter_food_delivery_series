@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_food_delivery_app/models/menu_item_model.dart';
+import 'menu_item_model.dart';
 
 import 'category_model.dart';
 import 'opening_hours_model.dart';

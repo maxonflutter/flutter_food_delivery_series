@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_food_delivery_app/screens/screens.dart';
+import '../screens/screens.dart';
 
 import '../models/models.dart';
 import '../screens/screens.dart';

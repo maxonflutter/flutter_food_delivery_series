@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/basket/basket_bloc.dart';
+import '../../blocs/basket/basket_bloc.dart';
 
 class EditBasketScreen extends StatelessWidget {
   static const String routeName = '/edit-basket';

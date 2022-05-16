@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
-import 'package:flutter_food_delivery_app/repositories/voucher/voucher_repository.dart';
+import '../../models/models.dart';
+import '../../repositories/voucher/voucher_repository.dart';
 
 part 'voucher_event.dart';
 part 'voucher_state.dart';
