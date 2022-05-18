@@ -14,24 +14,31 @@ class AutocompleteBloc extends Bloc<AutocompleteEvent, AutocompleteState> {
 
   AutocompleteBloc({required PlacesRepository placesRepository})
       : _placesRepository = placesRepository,
-        super(AutocompleteLoading());
-
-  @override
-  Stream<AutocompleteState> mapEventToState(
-    AutocompleteEvent event,
-  ) async* {
-    if (event is LoadAutocomplete) {
-      yield* _mapLoadAutocompleteToState(event);
-    }
+        super(AutocompleteLoading()) {
+    on<LoadAutocomplete>(_onLoadAutocomplete);
+    on<ClearAutocomplete>(_onClearAutocomplete);
   }
 
-  Stream<AutocompleteState> _mapLoadAutocompleteToState(
-      LoadAutocomplete event) async* {
-    _placesSubscription?.cancel();
-
+  void _onLoadAutocomplete(
+    LoadAutocomplete event,
+    Emitter<AutocompleteState> emit,
+  ) async {
     final List<PlaceAutocomplete> autocomplete =
         await _placesRepository.getAutocomplete(event.searchInput);
 
-    yield AutocompleteLoaded(autocomplete: autocomplete);
+    emit(AutocompleteLoaded(autocomplete: autocomplete));
+  }
+
+  void _onClearAutocomplete(
+    ClearAutocomplete event,
+    Emitter<AutocompleteState> emit,
+  ) async {
+    emit(AutocompleteLoaded(autocomplete: List.empty()));
+  }
+
+  @override
+  Future<void> close() async {
+    _placesSubscription?.cancel();
+    super.close();
   }
 }

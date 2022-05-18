@@ -43,34 +43,30 @@ class MyApp extends StatelessWidget {
             ),
           ),
           BlocProvider(
-              create: (context) => GeolocationBloc(
-                  geolocationRepository: context.read<GeolocationRepository>())
-                ..add(LoadGeolocation())),
-          BlocProvider(
-              create: (context) => AutocompleteBloc(
-                  placesRepository: context.read<PlacesRepository>())
-                ..add(LoadAutocomplete())),
-          BlocProvider(
-              create: (context) => PlaceBloc(
-                  placesRepository: context.read<PlacesRepository>())),
+            create: (context) => AutocompleteBloc(
+              placesRepository: context.read<PlacesRepository>(),
+            )..add(LoadAutocomplete()),
+          ),
           BlocProvider(
             create: (context) => FilterBloc(
               restaurantsBloc: context.read<RestaurantsBloc>(),
             )..add(LoadFilter()),
           ),
           BlocProvider(
-            create: (context) =>
-                VoucherBloc(voucherRepository: VoucherRepository())
-                  ..add(
-                    LoadVouchers(),
-                  ),
+            create: (context) => VoucherBloc(
+              voucherRepository: VoucherRepository(),
+            )..add(LoadVouchers()),
           ),
           BlocProvider(
-            create: (context) =>
-                BasketBloc(voucherBloc: BlocProvider.of<VoucherBloc>(context))
-                  ..add(
-                    StartBasket(),
-                  ),
+            create: (context) => BasketBloc(
+              voucherBloc: BlocProvider.of<VoucherBloc>(context),
+            )..add(StartBasket()),
+          ),
+          BlocProvider(
+            create: (context) => LocationBloc(
+              geolocationRepository: context.read<GeolocationRepository>(),
+              placesRepository: context.read<PlacesRepository>(),
+            )..add(LoadMap()),
           ),
         ],
         child: MaterialApp(
@@ -78,7 +74,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: theme(),
           onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: HomeScreen.routeName,
+          initialRoute: LocationScreen.routeName,
         ),
       ),
     );

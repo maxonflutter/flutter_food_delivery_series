@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../blocs/autocomplete/autocomplete_bloc.dart';
-import '../../blocs/geolocation/geolocation_bloc.dart';
-import '../../blocs/place/place_bloc.dart';
-import '../../widgets/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../../blocs/blocs.dart';
+import '../../widgets/widgets.dart';
 
 class LocationScreen extends StatelessWidget {
   static const String routeName = '/location';
@@ -19,44 +19,97 @@ class LocationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<PlaceBloc, PlaceState>(
+      body: BlocBuilder<LocationBloc, LocationState>(
         builder: (context, state) {
-          if (state is PlaceLoading) {
-            return Stack(
-              children: [
-                BlocBuilder<GeolocationBloc, GeolocationState>(
-                  builder: (context, state) {
-                    if (state is GeolocationLoading) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state is GeolocationLoaded) {
-                      return Stack(
-                        children: [
-                          Gmap(
-                            lat: state.position.latitude,
-                            lng: state.position.longitude,
-                          ),
-                        ],
-                      );
-                    } else {
-                      return Text('Something went wrong!');
-                    }
-                  },
-                ),
-                SaveButton(),
-                Location(),
-              ],
+          if (state is LocationLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
             );
-          } else if (state is PlaceLoaded) {
+          }
+          if (state is LocationLoaded) {
             return Stack(
               children: [
-                Gmap(
-                  lat: state.place.lat,
-                  lng: state.place.lon,
+                GoogleMap(
+                  myLocationEnabled: true,
+                  onMapCreated: (GoogleMapController controller) {
+                    context.read<LocationBloc>().add(
+                          LoadMap(controller: controller),
+                        );
+                  },
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(state.lat, state.lng),
+                    zoom: 13,
+                  ),
                 ),
-                SaveButton(),
-                Location(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 40,
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset('assets/logo.svg', height: 50),
+                          SizedBox(width: 10),
+                          Expanded(child: LocationSearchBox()),
+                        ],
+                      ),
+                      BlocBuilder<AutocompleteBloc, AutocompleteState>(
+                        builder: (context, state) {
+                          if (state is AutocompleteLoading) {
+                            return SizedBox();
+                          }
+                          if (state is AutocompleteLoaded) {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: state.autocomplete.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  color: Colors.black.withOpacity(0.6),
+                                  child: ListTile(
+                                    title: Text(
+                                      state.autocomplete[index].description,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6!
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                    onTap: () {
+                                      context.read<LocationBloc>().add(
+                                            SearchLocation(
+                                              placeId: state
+                                                  .autocomplete[index].placeId,
+                                            ),
+                                          );
+                                      context
+                                          .read<AutocompleteBloc>()
+                                          .add(ClearAutocomplete());
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          } else {
+                            return Text('Something went wrong!');
+                          }
+                        },
+                      ),
+                      Expanded(child: SizedBox()),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Theme.of(context).primaryColor,
+                          fixedSize: Size(200, 40),
+                        ),
+                        child: Text('Save'),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/');
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ],
             );
           } else {
@@ -68,107 +121,183 @@ class LocationScreen extends StatelessWidget {
   }
 }
 
-class Location extends StatelessWidget {
-  const Location({
+class _GoogleMap extends StatelessWidget {
+  const _GoogleMap({
     Key? key,
+    required this.lat,
+    required this.lng,
   }) : super(key: key);
+
+  final double lat;
+  final double lng;
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 40,
-      left: 20,
-      right: 20,
-      child: Container(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SvgPicture.asset(
-              'assets/logo.svg',
-              height: 50,
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  LocationSearchBox(),
-                  BlocBuilder<AutocompleteBloc, AutocompleteState>(
-                    builder: (context, state) {
-                      if (state is AutocompleteLoading) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else if (state is AutocompleteLoaded) {
-                        return Container(
-                          margin: const EdgeInsets.all(8),
-                          height: 300,
-                          color: state.autocomplete.length > 0
-                              ? Colors.black.withOpacity(0.6)
-                              : Colors.transparent,
-                          child: ListView.builder(
-                            itemCount: state.autocomplete.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(
-                                  state.autocomplete[index].description,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline6!
-                                      .copyWith(
-                                        color: Colors.white,
-                                      ),
-                                ),
-                                onTap: () {
-                                  context.read<PlaceBloc>().add(
-                                        LoadPlace(
-                                          placeId:
-                                              state.autocomplete[index].placeId,
-                                        ),
-                                      );
-                                },
-                              );
-                            },
-                          ),
-                        );
-                      } else {
-                        return Text('Something went wrong!');
-                      }
-                    },
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
+    return GoogleMap(
+      myLocationEnabled: true,
+      onMapCreated: (GoogleMapController controller) {
+        context.read<LocationBloc>().add(
+              LoadMap(controller: controller),
+            );
+      },
+      initialCameraPosition: CameraPosition(
+        target: LatLng(lat, lng),
+        zoom: 13,
       ),
     );
   }
 }
 
-class SaveButton extends StatelessWidget {
-  const SaveButton({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 50,
-      left: 20,
-      right: 20,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 70.0),
-        child: ElevatedButton(
-          style:
-              ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
-          child: Text('Save'),
-          onPressed: () {
-            Navigator.pushNamed(context, '/');
-          },
-        ),
-      ),
-    );
-  }
-}
+
+// import 'dart:async';
+
+// import 'package:flutter/material.dart';
+// import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+// import '../../blocs/blocs.dart';
+// import '../../repositories/repositories.dart';
+// import '../../widgets/widgets.dart';
+
+// class LocationScreen extends StatelessWidget {
+//   static const String routeName = '/location';
+
+//   static Route route() {
+//     return MaterialPageRoute(
+//       builder: (_) => BlocProvider(
+//         create: (context) => LocationBloc(
+//           geolocationRepository: context.read<GeolocationRepository>(),
+//           placesRepository: context.read<PlacesRepository>(),
+//         ),
+//         child: LocationScreen(),
+//       ),
+//       settings: RouteSettings(name: routeName),
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: BlocBuilder<LocationBloc, LocationState>(
+//         builder: (context, state) {
+//           if (state is LocationLoading) {
+//             return Center(
+//               child: _GoogleMap(
+//                 lat: 0,
+//                 lng: 0,
+//               ),
+//             );
+//           }
+//           if (state is LocationLoaded) {
+//             return Stack(
+//               children: [
+//                 _GoogleMap(
+//                   lat: state.lat,
+//                   lng: state.lng,
+//                 ),
+//                 Padding(
+//                   padding: const EdgeInsets.symmetric(
+//                     horizontal: 20,
+//                     vertical: 40,
+//                   ),
+//                   child: Column(
+//                     children: [
+//                       Row(
+//                         crossAxisAlignment: CrossAxisAlignment.center,
+//                         children: [
+//                           SvgPicture.asset('assets/logo.svg', height: 50),
+//                           SizedBox(width: 10),
+//                           Expanded(child: LocationSearchBox()),
+//                         ],
+//                       ),
+//                       BlocBuilder<AutocompleteBloc, AutocompleteState>(
+//                         builder: (context, state) {
+//                           if (state is AutocompleteLoading) {
+//                             return SizedBox();
+//                           }
+//                           if (state is AutocompleteLoaded) {
+//                             return ListView.builder(
+//                               shrinkWrap: true,
+//                               itemCount: state.autocomplete.length,
+//                               itemBuilder: (context, index) {
+//                                 return Container(
+//                                   color: Colors.black.withOpacity(0.6),
+//                                   child: ListTile(
+//                                     title: Text(
+//                                       state.autocomplete[index].description,
+//                                       style: Theme.of(context)
+//                                           .textTheme
+//                                           .headline6!
+//                                           .copyWith(color: Colors.white),
+//                                     ),
+//                                     onTap: () {
+//                                       context.read<LocationBloc>().add(
+//                                             SearchLocation(
+//                                               placeId: state
+//                                                   .autocomplete[index].placeId,
+//                                             ),
+//                                           );
+//                                     },
+//                                   ),
+//                                 );
+//                               },
+//                             );
+//                           } else {
+//                             return Text('Something went wrong!');
+//                           }
+//                         },
+//                       ),
+//                       Expanded(child: SizedBox()),
+//                       ElevatedButton(
+//                         style: ElevatedButton.styleFrom(
+//                           primary: Theme.of(context).primaryColor,
+//                           fixedSize: Size(200, 40),
+//                         ),
+//                         child: Text('Save'),
+//                         onPressed: () {
+//                           Navigator.pushNamed(context, '/');
+//                         },
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ],
+//             );
+//           } else {
+//             return Text('Something went wrong!');
+//           }
+//         },
+//       ),
+//     );
+//   }
+// }
+
+// class _GoogleMap extends StatelessWidget {
+//   const _GoogleMap({
+//     Key? key,
+//     required this.lat,
+//     required this.lng,
+//   }) : super(key: key);
+
+//   final double lat;
+//   final double lng;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     print('Stateless widget: $lat, $lng');
+//     return GoogleMap(
+//       myLocationEnabled: true,
+//       onMapCreated: (GoogleMapController controller) {
+//         context.read<LocationBloc>().add(
+//               LoadMap(controller: controller),
+//             );
+//       },
+//       initialCameraPosition: CameraPosition(
+//         target: LatLng(lat, lng),
+//         zoom: 12,
+//       ),
+//     );
+//   }
+// }

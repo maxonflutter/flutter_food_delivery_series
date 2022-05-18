@@ -9,43 +9,29 @@ class LocationSearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AutocompleteBloc, AutocompleteState>(
-        builder: (context, state) {
-      if (state is AutocompleteLoading) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-      if (state is AutocompleteLoaded) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              hintText: 'Enter Your Location',
-              suffixIcon: Icon(Icons.search),
-              contentPadding:
-                  const EdgeInsets.only(left: 20.0, bottom: 5.0, top: 5.0),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            onChanged: (value) {
-              context
-                  .read<AutocompleteBloc>()
-                  .add(LoadAutocomplete(searchInput: value));
-            },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          hintText: 'Enter Your Location',
+          suffixIcon: Icon(Icons.search),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(10),
           ),
-        );
-      } else {
-        return Text('Something went wrong');
-      }
-    });
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        onChanged: (value) {
+          context
+              .read<AutocompleteBloc>()
+              .add(LoadAutocomplete(searchInput: value));
+        },
+      ),
+    );
   }
 }

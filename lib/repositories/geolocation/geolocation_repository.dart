@@ -7,6 +7,7 @@ class GeolocationRepository extends BaseGeolocationRepository {
   @override
   Future<Position> getCurrentLocation() async {
     return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+      desiredAccuracy: LocationAccuracy.high,
+    );
   }
 }
