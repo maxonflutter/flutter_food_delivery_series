@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_food_delivery_app/models/promo_model.dart';
+import '../models/promo_model.dart';
 
 class PromoBox extends StatelessWidget {
   final Promo promo;

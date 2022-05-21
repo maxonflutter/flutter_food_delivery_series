@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_food_delivery_app/models/voucher_model.dart';
+import '../../models/voucher_model.dart';
 
 import 'base_voucher_repository.dart';
 

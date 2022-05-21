@@ -18,14 +18,8 @@ class MenuItem extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        id,
-        restaurantId,
-        name,
-        category,
-        description,
-        price,
-      ];
+  List<Object?> get props =>
+      [id, restaurantId, name, category, description, price];
 
   static List<MenuItem> menuItems = [
     MenuItem(

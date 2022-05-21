@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/filter/filter_bloc.dart';
-import 'package:flutter_food_delivery_app/models/category_filter_model.dart';
+import '../blocs/filter/filter_bloc.dart';
+import '../models/category_filter_model.dart';
 
 class CustomCategoryFilter extends StatelessWidget {
   const CustomCategoryFilter({

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/autocomplete/autocomplete_bloc.dart';
+import '../blocs/autocomplete/autocomplete_bloc.dart';
 
 class LocationSearchBox extends StatelessWidget {
   const LocationSearchBox({

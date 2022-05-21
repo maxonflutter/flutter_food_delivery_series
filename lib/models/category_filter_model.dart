@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_food_delivery_app/models/category_model.dart';
+import 'category_model.dart';
 
 class CategoryFilter extends Equatable {
   final int id;

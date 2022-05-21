@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_food_delivery_app/models/category_filter_model.dart';
-import 'package:flutter_food_delivery_app/models/filter_model.dart';
-import 'package:flutter_food_delivery_app/models/price_filter_model.dart';
+import '../../models/category_filter_model.dart';
+import '../../models/filter_model.dart';
+import '../../models/price_filter_model.dart';
 
 part 'filter_event.dart';
 part 'filter_state.dart';

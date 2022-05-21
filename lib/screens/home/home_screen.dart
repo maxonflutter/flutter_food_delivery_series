@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
-import 'package:flutter_food_delivery_app/models/promo_model.dart';
-import 'package:flutter_food_delivery_app/widgets/widgets.dart';
+import '../../models/models.dart';
+import '../../models/promo_model.dart';
+import '../../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/';

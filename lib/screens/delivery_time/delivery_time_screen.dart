@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/basket/basket_bloc.dart';
-import 'package:flutter_food_delivery_app/models/delivery_time_model.dart';
+import '../../blocs/basket/basket_bloc.dart';
+import '../../models/delivery_time_model.dart';
 
 class DeliveryTimeScreen extends StatelessWidget {
   static const String routeName = '/delivery-time';

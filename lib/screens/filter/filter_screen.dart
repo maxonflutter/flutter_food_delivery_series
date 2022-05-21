@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/filter/filter_bloc.dart';
-import 'package:flutter_food_delivery_app/models/category_filter_model.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
-import 'package:flutter_food_delivery_app/models/price_filter_model.dart';
-import 'package:flutter_food_delivery_app/models/price_model.dart';
-import 'package:flutter_food_delivery_app/widgets/widgets.dart';
+import '../../blocs/filter/filter_bloc.dart';
+import '../../models/category_filter_model.dart';
+import '../../models/models.dart';
+import '../../models/price_filter_model.dart';
+import '../../models/price_model.dart';
+import '../../widgets/widgets.dart';
 
 class FilterScreen extends StatelessWidget {
   static const String routeName = '/filters';

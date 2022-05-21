@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_food_delivery_app/blocs/voucher/voucher_bloc.dart';
-import 'package:flutter_food_delivery_app/models/menu_item_model.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
+import '../voucher/voucher_bloc.dart';
+import '../../models/menu_item_model.dart';
+import '../../models/models.dart';
 
 part 'basket_event.dart';
 part 'basket_state.dart';

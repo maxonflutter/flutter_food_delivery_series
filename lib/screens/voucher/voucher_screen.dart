@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/blocs.dart';
-import 'package:flutter_food_delivery_app/blocs/voucher/voucher_bloc.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
-import 'package:flutter_food_delivery_app/repositories/voucher/voucher_repository.dart';
+import '../../blocs/blocs.dart';
+import '../../blocs/voucher/voucher_bloc.dart';
+import '../../models/models.dart';
+import '../../repositories/voucher/voucher_repository.dart';
 
 class VoucherScreen extends StatelessWidget {
   static const String routeName = '/vouchers';

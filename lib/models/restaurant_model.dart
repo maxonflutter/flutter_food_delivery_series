@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_food_delivery_app/models/menu_item_model.dart';
+import 'menu_item_model.dart';
 
 class Restaurant extends Equatable {
   final String name;
@@ -9,7 +9,7 @@ class Restaurant extends Equatable {
   final int deliveryTime;
   final String priceCategory;
   final double deliveryFee;
-  final double distance; // TODO: Calculate distance between user and restaurant
+  final double distance;
 
   const Restaurant({
     required this.name,

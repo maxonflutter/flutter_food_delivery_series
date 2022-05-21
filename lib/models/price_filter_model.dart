@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_food_delivery_app/models/Price_model.dart';
+import 'Price_model.dart';
 
 class PriceFilter extends Equatable {
   final int id;
