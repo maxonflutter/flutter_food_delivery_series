@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 class PlacesRepository extends BasePlacesRepository {
-  final String key = 'YOUR-API-KEY';
+  final String key = 'API_KEY';
   final String types = 'geocode';
 
   @override
