@@ -1,16 +1,5 @@
-# flutter_food_delivery_app
+# Max on Flutter - The Food Delivery Series
 
-A new Flutter project.
+Learn how to build a production Flutter Food Delivery App from scratch using Flutter, Firebase & the BloC Pattern. The series will take you through the development cycle of a Flutter food ordering app from planning to design, development and testing. By the end of the series, the app will be launched and live on iOS and Android devices.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The full playlist on YouTube: https://www.youtube.com/playlist?list=PLCAZyR6zw2pyCxMR2q3cEhZOSiKzwMFXV

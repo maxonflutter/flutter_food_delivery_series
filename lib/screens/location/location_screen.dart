@@ -39,7 +39,7 @@ class LocationScreen extends StatelessWidget {
                   },
                   initialCameraPosition: CameraPosition(
                     target: LatLng(state.lat, state.lng),
-                    zoom: 13,
+                    zoom: 12,
                   ),
                 ),
                 Padding(
