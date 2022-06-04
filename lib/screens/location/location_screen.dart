@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../blocs/blocs.dart';
+import '../../models/models.dart';
 import '../../widgets/widgets.dart';
 
 class LocationScreen extends StatelessWidget {
@@ -27,6 +28,9 @@ class LocationScreen extends StatelessWidget {
             );
           }
           if (state is LocationLoaded) {
+            List<Restaurant> restaurants =
+                (context.read<RestaurantsBloc>().state as RestaurantsLoaded)
+                    .restaurants;
             return Stack(
               children: [
                 GoogleMap(
@@ -36,6 +40,45 @@ class LocationScreen extends StatelessWidget {
                     context.read<LocationBloc>().add(
                           LoadMap(controller: controller),
                         );
+                  },
+                  markers: {
+                    Marker(
+                      markerId: MarkerId('marker_1'),
+                      infoWindow: InfoWindow(
+                        title: restaurants[0].name,
+                        snippet: restaurants[0].description,
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/restaurant-details',
+                            arguments: restaurants[0],
+                          );
+                        },
+                      ),
+                      position: LatLng(
+                        restaurants[0].address.lat,
+                        restaurants[0].address.lon,
+                      ),
+                    ),
+                    Marker(
+                      markerId: MarkerId('marker_2'),
+                      infoWindow: InfoWindow(
+                        title: restaurants[1].name,
+                        snippet: restaurants[1].description,
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            '/restaurant-details',
+                            arguments: restaurants[1],
+                          );
+                        },
+                      ),
+                      position: LatLng(
+                        restaurants[1].address.lat,
+                        restaurants[1].address.lon,
+                      ),
+                      onTap: () {},
+                    ),
                   },
                   initialCameraPosition: CameraPosition(
                     target: LatLng(

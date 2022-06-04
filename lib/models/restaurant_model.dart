@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'menu_item_model.dart';
 
 import 'category_model.dart';
 import 'opening_hours_model.dart';
+import 'place_model.dart';
 import 'product_model.dart';
 
 class Restaurant extends Equatable {
@@ -19,6 +19,7 @@ class Restaurant extends Equatable {
   final String priceCategory;
   final double deliveryFee;
   final double distance;
+  final Place address;
 
   const Restaurant({
     required this.id,
@@ -29,6 +30,7 @@ class Restaurant extends Equatable {
     required this.categories,
     required this.products,
     required this.openingHours,
+    required this.address,
     this.deliveryTime = 10,
     this.priceCategory = '\$',
     this.deliveryFee = 10,
@@ -61,6 +63,7 @@ class Restaurant extends Equatable {
           return OpeningHours.fromSnapshot(openingHour);
         },
       ).toList(),
+      address: Place.fromJson(snap['address']),
     );
   }
 
