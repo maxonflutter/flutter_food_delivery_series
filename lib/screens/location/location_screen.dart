@@ -38,8 +38,11 @@ class LocationScreen extends StatelessWidget {
                         );
                   },
                   initialCameraPosition: CameraPosition(
-                    target: LatLng(state.lat, state.lng),
-                    zoom: 12,
+                    target: LatLng(
+                      state.place.lat,
+                      state.place.lon,
+                    ),
+                    zoom: 15,
                   ),
                 ),
                 Padding(
@@ -58,14 +61,15 @@ class LocationScreen extends StatelessWidget {
                         ],
                       ),
                       _SearchBoxSuggestions(),
-                      Expanded(child: SizedBox()),
+                      Spacer(),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Theme.of(context).primaryColor,
+                          primary: Theme.of(context).colorScheme.primary,
                           fixedSize: Size(200, 40),
                         ),
                         child: Text('Save'),
                         onPressed: () {
+                          print(state.place);
                           Navigator.pushNamed(context, '/');
                         },
                       ),
