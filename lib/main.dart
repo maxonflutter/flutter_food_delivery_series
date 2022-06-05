@@ -75,6 +75,7 @@ class MyApp extends StatelessWidget {
               geolocationRepository: context.read<GeolocationRepository>(),
               placesRepository: context.read<PlacesRepository>(),
               localStorageRepository: context.read<LocalStorageRepository>(),
+              restaurantRepository: context.read<RestaurantRepository>(),
             )..add(LoadMap()),
           ),
         ],
