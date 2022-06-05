@@ -46,8 +46,17 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
+            create: (context) => LocationBloc(
+              geolocationRepository: context.read<GeolocationRepository>(),
+              placesRepository: context.read<PlacesRepository>(),
+              localStorageRepository: context.read<LocalStorageRepository>(),
+              restaurantRepository: context.read<RestaurantRepository>(),
+            )..add(LoadMap()),
+          ),
+          BlocProvider(
             create: (context) => RestaurantsBloc(
               restaurantRepository: context.read<RestaurantRepository>(),
+              locationBloc: context.read<LocationBloc>(),
             ),
           ),
           BlocProvider(
@@ -69,14 +78,6 @@ class MyApp extends StatelessWidget {
             create: (context) => BasketBloc(
               voucherBloc: BlocProvider.of<VoucherBloc>(context),
             )..add(StartBasket()),
-          ),
-          BlocProvider(
-            create: (context) => LocationBloc(
-              geolocationRepository: context.read<GeolocationRepository>(),
-              placesRepository: context.read<PlacesRepository>(),
-              localStorageRepository: context.read<LocalStorageRepository>(),
-              restaurantRepository: context.read<RestaurantRepository>(),
-            )..add(LoadMap()),
           ),
         ],
         child: MaterialApp(
