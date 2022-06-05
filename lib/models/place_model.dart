@@ -14,14 +14,24 @@ class Place extends Equatable {
   @HiveField(3)
   final double lon;
 
-  Place({
+  const Place({
     this.placeId = '',
     this.name = '',
     required this.lat,
     required this.lon,
   });
 
+  static const empty = Place(lat: 0, lon: 0);
+
   factory Place.fromJson(Map<String, dynamic> json) {
+    if (!json.keys.contains('name')) {
+      return Place(
+        placeId: json['place_id'],
+        name: json['description'],
+        lat: 0,
+        lon: 0,
+      );
+    }
     if (json.keys.contains('place_id')) {
       return Place(
         placeId: json['place_id'],

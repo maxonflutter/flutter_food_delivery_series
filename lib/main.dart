@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_food_delivery_app/datasources/local_datasource/local_datasource.dart';
+import 'package:flutter_food_delivery_app/datasources/places_api/places_api.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'blocs/blocs.dart';
@@ -33,23 +35,22 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<GeolocationRepository>(
           create: (_) => GeolocationRepository(),
         ),
-        RepositoryProvider<PlacesRepository>(
-          create: (_) => PlacesRepository(),
+        RepositoryProvider<LocationRepository>(
+          create: (_) => LocationRepository(
+            placesAPI: PlacesAPIImpl(),
+            localDatasource: LocalDatasourceImpl(),
+          ),
         ),
         RepositoryProvider<RestaurantRepository>(
           create: (_) => RestaurantRepository(),
         ),
-        RepositoryProvider<LocalStorageRepository>(
-          create: (_) => LocalStorageRepository(),
-        )
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) => LocationBloc(
               geolocationRepository: context.read<GeolocationRepository>(),
-              placesRepository: context.read<PlacesRepository>(),
-              localStorageRepository: context.read<LocalStorageRepository>(),
+              locationRepository: context.read<LocationRepository>(),
               restaurantRepository: context.read<RestaurantRepository>(),
             )..add(LoadMap()),
           ),
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => AutocompleteBloc(
-              placesRepository: context.read<PlacesRepository>(),
+              locationRepository: context.read<LocationRepository>(),
             )..add(LoadAutocomplete()),
           ),
           BlocProvider(

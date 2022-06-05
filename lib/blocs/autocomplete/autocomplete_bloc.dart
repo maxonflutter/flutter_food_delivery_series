@@ -2,18 +2,19 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../models/place_autocomplete_model.dart';
-import '../../repositories/places/places_repository.dart';
+
+import '/models/models.dart';
+import '/repositories/repositories.dart';
 
 part 'autocomplete_event.dart';
 part 'autocomplete_state.dart';
 
 class AutocompleteBloc extends Bloc<AutocompleteEvent, AutocompleteState> {
-  final PlacesRepository _placesRepository;
+  final LocationRepository _locationRepository;
   StreamSubscription? _placesSubscription;
 
-  AutocompleteBloc({required PlacesRepository placesRepository})
-      : _placesRepository = placesRepository,
+  AutocompleteBloc({required LocationRepository locationRepository})
+      : _locationRepository = locationRepository,
         super(AutocompleteLoading()) {
     on<LoadAutocomplete>(_onLoadAutocomplete);
     on<ClearAutocomplete>(_onClearAutocomplete);
@@ -23,8 +24,8 @@ class AutocompleteBloc extends Bloc<AutocompleteEvent, AutocompleteState> {
     LoadAutocomplete event,
     Emitter<AutocompleteState> emit,
   ) async {
-    final List<PlaceAutocomplete> autocomplete =
-        await _placesRepository.getAutocomplete(event.searchInput);
+    final List<Place> autocomplete =
+        await _locationRepository.getAutocomplete(event.searchInput);
 
     emit(AutocompleteLoaded(autocomplete: autocomplete));
   }

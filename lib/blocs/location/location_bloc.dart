@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import '/models/models.dart';
 import '/repositories/repositories.dart';
@@ -13,22 +12,19 @@ part 'location_event.dart';
 part 'location_state.dart';
 
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
-  final PlacesRepository _placesRepository;
+  final LocationRepository _locationRepository;
   final GeolocationRepository _geolocationRepository;
-  final LocalStorageRepository _localStorageRepository;
   final RestaurantRepository _restaurantRepository;
   StreamSubscription? _placesSubscription;
   StreamSubscription? _geolocationSubscription;
   StreamSubscription? _restaurantsSubscription;
 
   LocationBloc({
-    required PlacesRepository placesRepository,
+    required LocationRepository locationRepository,
     required GeolocationRepository geolocationRepository,
-    required LocalStorageRepository localStorageRepository,
     required RestaurantRepository restaurantRepository,
-  })  : _placesRepository = placesRepository,
+  })  : _locationRepository = locationRepository,
         _geolocationRepository = geolocationRepository,
-        _localStorageRepository = localStorageRepository,
         _restaurantRepository = restaurantRepository,
         super(LocationLoading()) {
     on<LoadMap>(_onLoadMap);
@@ -39,8 +35,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     LoadMap event,
     Emitter<LocationState> emit,
   ) async {
-    Box box = await _localStorageRepository.openBox();
-    Place? place = _localStorageRepository.getPlace(box);
+    Place? place = await _locationRepository.getPlace();
 
     if (place == null) {
       final Position position =
@@ -69,26 +64,28 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     Emitter<LocationState> emit,
   ) async {
     final state = this.state as LocationLoaded;
-    final Place place = await _placesRepository.getPlace(event.placeId);
-
-    Box box = await _localStorageRepository.openBox();
-    _localStorageRepository.clearBox(box);
-    _localStorageRepository.addPlace(box, place);
+    final Place place =
+        await _locationRepository.getPlace(event.placeId) ?? Place.empty;
 
     state.controller!.animateCamera(
       CameraUpdate.newLatLng(
-        LatLng(place.lat, place.lon),
+        LatLng(
+          place.lat,
+          place.lon,
+        ),
       ),
     );
 
     List<Restaurant> restaurants =
         await _restaurantRepository.getNearbyRestaurants(place).first;
 
-    emit(LocationLoaded(
-      controller: state.controller,
-      place: place,
-      restaurants: restaurants,
-    ));
+    emit(
+      LocationLoaded(
+        controller: state.controller,
+        place: place,
+        restaurants: restaurants,
+      ),
+    );
   }
 
   @override
