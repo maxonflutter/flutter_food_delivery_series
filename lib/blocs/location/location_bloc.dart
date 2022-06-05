@@ -52,7 +52,8 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       );
     }
 
-    List<Restaurant> restaurants = await _getNearbyRestaurants(place);
+    List<Restaurant> restaurants =
+        await _restaurantRepository.getNearbyRestaurants(place).first;
 
     emit(
       LocationLoaded(
@@ -80,38 +81,14 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       ),
     );
 
-    List<Restaurant> restaurants = await _getNearbyRestaurants(place);
+    List<Restaurant> restaurants =
+        await _restaurantRepository.getNearbyRestaurants(place).first;
 
     emit(LocationLoaded(
       controller: state.controller,
       place: place,
       restaurants: restaurants,
     ));
-  }
-
-  Future<List<Restaurant>> _getNearbyRestaurants(Place place) async {
-    List<Restaurant> restaurants =
-        await _restaurantRepository.getRestaurants().first;
-
-    return restaurants
-        .where((restaurant) =>
-            _getRestaurantDistance(restaurant.address, place) <= 10)
-        .toList();
-  }
-
-  int _getRestaurantDistance(
-    Place restaurantAddress,
-    Place selectedAddress,
-  ) {
-    GeolocatorPlatform geolocator = GeolocatorPlatform.instance;
-    var distanceInKm = geolocator.distanceBetween(
-          restaurantAddress.lat.toDouble(),
-          restaurantAddress.lon.toDouble(),
-          selectedAddress.lat.toDouble(),
-          selectedAddress.lon.toDouble(),
-        ) ~/
-        1000;
-    return distanceInKm;
   }
 
   @override

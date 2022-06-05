@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_food_delivery_app/blocs/location/location_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import '/models/models.dart';
 import '/repositories/repositories.dart';
 
@@ -27,14 +26,11 @@ class RestaurantsBloc extends Bloc<RestaurantsEvent, RestaurantsState> {
     _locationSubscription = _locationBloc.stream.listen(
       (state) {
         if (state is LocationLoaded) {
-          final Place place = state.place;
           _restaurantsSubscription =
-              _restaurantRepository.getRestaurants().listen(
-            (restaurants) async {
-              List<Restaurant> filteredRestaurants =
-                  await _getNearbyRestaurants(restaurants, place);
+              _restaurantRepository.getNearbyRestaurants(state.place).listen(
+            (restaurants) {
               add(
-                LoadRestaurants(filteredRestaurants),
+                LoadRestaurants(restaurants),
               );
             },
           );
@@ -48,31 +44,6 @@ class RestaurantsBloc extends Bloc<RestaurantsEvent, RestaurantsState> {
     Emitter<RestaurantsState> emit,
   ) {
     emit(RestaurantsLoaded(event.restaurants));
-  }
-
-  Future<List<Restaurant>> _getNearbyRestaurants(
-    List<Restaurant> restaurants,
-    Place place,
-  ) async {
-    return restaurants
-        .where((restaurant) =>
-            _getRestaurantDistance(restaurant.address, place) <= 10)
-        .toList();
-  }
-
-  int _getRestaurantDistance(
-    Place restaurantAddress,
-    Place selectedAddress,
-  ) {
-    GeolocatorPlatform geolocator = GeolocatorPlatform.instance;
-    var distanceInKm = geolocator.distanceBetween(
-          restaurantAddress.lat.toDouble(),
-          restaurantAddress.lon.toDouble(),
-          selectedAddress.lat.toDouble(),
-          selectedAddress.lon.toDouble(),
-        ) ~/
-        1000;
-    return distanceInKm;
   }
 
   @override
