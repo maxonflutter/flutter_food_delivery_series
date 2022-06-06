@@ -1,8 +1,15 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'delivery_time_model.g.dart';
+
+@HiveType(typeId: 4)
 class DeliveryTime extends Equatable {
-  final int id;
+  @HiveField(0)
+  final String id;
+  @HiveField(1)
   final String value;
+  @HiveField(2)
   final DateTime time;
 
   DeliveryTime({
@@ -16,7 +23,7 @@ class DeliveryTime extends Equatable {
 
   static List<DeliveryTime> deliveryTimes = [
     DeliveryTime(
-      id: 1,
+      id: '1',
       value: '08:00pm',
       time: DateTime(
         DateTime.now().year,
@@ -27,7 +34,7 @@ class DeliveryTime extends Equatable {
       ),
     ),
     DeliveryTime(
-      id: 2,
+      id: '2',
       value: '08:30pm',
       time: DateTime(
         DateTime.now().year,
@@ -38,7 +45,7 @@ class DeliveryTime extends Equatable {
       ),
     ),
     DeliveryTime(
-      id: 3,
+      id: '3',
       value: '09:00pm',
       time: DateTime(
         DateTime.now().year,
@@ -49,7 +56,7 @@ class DeliveryTime extends Equatable {
       ),
     ),
     DeliveryTime(
-      id: 4,
+      id: '4',
       value: '09:30pm',
       time: DateTime(
         DateTime.now().year,
@@ -60,7 +67,7 @@ class DeliveryTime extends Equatable {
       ),
     ),
     DeliveryTime(
-      id: 5,
+      id: '5',
       value: '10:00pm',
       time: DateTime(
         DateTime.now().year,
@@ -71,7 +78,7 @@ class DeliveryTime extends Equatable {
       ),
     ),
     DeliveryTime(
-      id: 6,
+      id: '6',
       value: '10:30pm',
       time: DateTime(
         DateTime.now().year,

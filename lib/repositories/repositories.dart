@@ -1,3 +1,5 @@
+export 'basket/base_basket_repository.dart';
+export 'basket/basket_repository.dart';
 export 'geolocation/base_geolocation_repository.dart';
 export 'geolocation/geolocation_repository.dart';
 export 'location/base_location_repository.dart';

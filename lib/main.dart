@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/datasources/local_datasource/local_datasource.dart';
-import 'package:flutter_food_delivery_app/datasources/places_api/places_api.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'models/models.dart';
 import 'blocs/blocs.dart';
-import '/models/models.dart';
-import 'repositories/repositories.dart';
-import 'config/theme.dart';
 import 'config/app_router.dart';
+import 'config/theme.dart';
+import 'datasources/datasources.dart';
+import 'repositories/repositories.dart';
 import 'screens/screens.dart';
 import 'simple_bloc_observer.dart';
 
@@ -17,7 +16,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Hive.initFlutter();
-  Hive.registerAdapter(PlaceAdapter());
+  Hive
+    ..registerAdapter(PlaceAdapter())
+    ..registerAdapter(ProductAdapter())
+    ..registerAdapter(VoucherAdapter())
+    ..registerAdapter(DeliveryTimeAdapter())
+    ..registerAdapter(BasketAdapter());
 
   BlocOverrides.runZoned(
     () {
@@ -38,6 +42,11 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<LocationRepository>(
           create: (_) => LocationRepository(
             placesAPI: PlacesAPIImpl(),
+            localDatasource: LocalDatasourceImpl(),
+          ),
+        ),
+        RepositoryProvider<BasketRepository>(
+          create: (_) => BasketRepository(
             localDatasource: LocalDatasourceImpl(),
           ),
         ),
@@ -77,7 +86,8 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => BasketBloc(
-              voucherBloc: BlocProvider.of<VoucherBloc>(context),
+              basketRepository: context.read<BasketRepository>(),
+              voucherBloc: context.read<VoucherBloc>(),
             )..add(StartBasket()),
           ),
         ],

@@ -2,20 +2,24 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../voucher/voucher_bloc.dart';
-import '../../models/models.dart';
 
-import '../../models/product_model.dart';
+import '/models/models.dart';
+import '/repositories/repositories.dart';
+import '/blocs/blocs.dart';
 
 part 'basket_event.dart';
 part 'basket_state.dart';
 
 class BasketBloc extends Bloc<BasketEvent, BasketState> {
+  final BasketRepository _basketRepository;
   final VoucherBloc _voucherBloc;
   late StreamSubscription _voucherSubscription;
 
-  BasketBloc({required VoucherBloc voucherBloc})
-      : _voucherBloc = voucherBloc,
+  BasketBloc({
+    required BasketRepository basketRepository,
+    required VoucherBloc voucherBloc,
+  })  : _basketRepository = basketRepository,
+        _voucherBloc = voucherBloc,
         super(BasketLoading()) {
     on<StartBasket>(_onStartBasket);
     on<AddProduct>(_onAddProduct);
@@ -37,10 +41,11 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     StartBasket event,
     Emitter<BasketState> emit,
   ) async {
+    Basket basket = await _basketRepository.getBasket();
     emit(BasketLoading());
     try {
       await Future<void>.delayed(const Duration(seconds: 1));
-      emit(BasketLoaded(basket: Basket()));
+      emit(BasketLoaded(basket: basket));
     } catch (_) {}
   }
 
@@ -51,13 +56,11 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     final state = this.state;
     if (state is BasketLoaded) {
       try {
-        emit(
-          BasketLoaded(
-            basket: state.basket.copyWith(
-              products: List.from(state.basket.products)..add(event.product),
-            ),
-          ),
+        Basket basket = state.basket.copyWith(
+          products: List.from(state.basket.products)..add(event.product),
         );
+        _basketRepository.saveBasket(basket);
+        emit(BasketLoaded(basket: basket));
       } catch (_) {}
     }
   }
@@ -69,13 +72,11 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     final state = this.state;
     if (state is BasketLoaded) {
       try {
-        emit(
-          BasketLoaded(
-            basket: state.basket.copyWith(
-              products: List.from(state.basket.products)..remove(event.product),
-            ),
-          ),
+        Basket basket = state.basket.copyWith(
+          products: List.from(state.basket.products)..remove(event.product),
         );
+        _basketRepository.saveBasket(basket);
+        emit(BasketLoaded(basket: basket));
       } catch (_) {}
     }
   }
@@ -88,14 +89,12 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
 
     if (state is BasketLoaded) {
       try {
-        emit(
-          BasketLoaded(
-            basket: state.basket.copyWith(
-              products: List.from(state.basket.products)
-                ..removeWhere((product) => product == event.product),
-            ),
-          ),
+        Basket basket = state.basket.copyWith(
+          products: List.from(state.basket.products)
+            ..removeWhere((product) => product == event.product),
         );
+        _basketRepository.saveBasket(basket);
+        emit(BasketLoaded(basket: basket));
       } catch (_) {}
     }
   }
@@ -106,13 +105,11 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
   ) {
     final state = this.state;
     if (state is BasketLoaded) {
-      emit(
-        BasketLoaded(
-          basket: state.basket.copyWith(
-            isCutlerySelected: !state.basket.isCutlerySelected,
-          ),
-        ),
+      Basket basket = state.basket.copyWith(
+        isCutlerySelected: !state.basket.isCutlerySelected,
       );
+      _basketRepository.saveBasket(basket);
+      emit(BasketLoaded(basket: basket));
     }
   }
 
@@ -123,11 +120,9 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     final state = this.state;
     if (state is BasketLoaded) {
       try {
-        emit(
-          BasketLoaded(
-            basket: state.basket.copyWith(voucher: event.voucher),
-          ),
-        );
+        Basket basket = state.basket.copyWith(voucher: event.voucher);
+        _basketRepository.saveBasket(basket);
+        emit(BasketLoaded(basket: basket));
       } catch (_) {}
     }
   }
@@ -139,11 +134,9 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     final state = this.state;
     if (state is BasketLoaded) {
       try {
-        emit(
-          BasketLoaded(
-            basket: state.basket.copyWith(deliveryTime: event.deliveryTime),
-          ),
-        );
+        Basket basket = state.basket.copyWith(deliveryTime: event.deliveryTime);
+        _basketRepository.saveBasket(basket);
+        emit(BasketLoaded(basket: basket));
       } catch (_) {}
     }
   }

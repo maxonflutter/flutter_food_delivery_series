@@ -2,10 +2,17 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'voucher_model.g.dart';
+
+@HiveType(typeId: 3)
 class Voucher extends Equatable {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String code;
+  @HiveField(2)
   final double value;
 
   const Voucher({

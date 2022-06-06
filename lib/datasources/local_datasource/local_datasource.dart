@@ -11,8 +11,8 @@ abstract class LocalDatasource {
   Future<void> addPlace(Box box, Place place);
 
   // Methods to store the basket details.
-  // Basket? getBasket(Box box);
-  // Future<void> addBasket(Box box, Basket basket);
+  Basket? getBasket(Box box);
+  Future<void> addBasket(Box box, Basket basket);
 }
 
 class LocalDatasourceImpl extends LocalDatasource {
@@ -43,16 +43,16 @@ class LocalDatasourceImpl extends LocalDatasource {
     await box.put(place.placeId, place);
   }
 
-  // @override
-  // Basket? getBasket(Box box) {
-  //   if (box.values.length > 0) {
-  //     return box.values.first as Basket;
-  //   } else
-  //     return null;
-  // }
+  @override
+  Basket? getBasket(Box box) {
+    if (box.values.length > 0) {
+      return box.values.first as Basket;
+    } else
+      return null;
+  }
 
-  // @override
-  // Future<void> addBasket(Box box, Basket basket) async {
-  //   await box.add(basket);
-  // }
+  @override
+  Future<void> addBasket(Box box, Basket basket) async {
+    await box.add(basket);
+  }
 }

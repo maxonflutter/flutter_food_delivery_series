@@ -1,22 +1,31 @@
 import 'package:equatable/equatable.dart';
-import 'product_model.dart';
+import 'package:hive/hive.dart';
 
 import 'models.dart';
 
+part 'basket_model.g.dart';
+
 const int DELIVERY_FEE = 5;
 
+@HiveType(typeId: 1)
 class Basket extends Equatable {
+  @HiveField(0)
   final List<Product> products;
+  @HiveField(1)
   final bool isCutlerySelected;
+  @HiveField(2)
   final Voucher? voucher;
+  @HiveField(3)
   final DeliveryTime? deliveryTime;
 
-  Basket({
+  const Basket({
     this.products = const <Product>[],
     this.isCutlerySelected = false,
     this.voucher,
     this.deliveryTime,
   });
+
+  static const empty = Basket();
 
   Basket copyWith({
     List<Product>? products,
