@@ -108,7 +108,9 @@ class BasketBloc extends Bloc<BasketEvent, BasketState> {
     if (state is BasketLoaded) {
       emit(
         BasketLoaded(
-          basket: state.basket.copyWith(cutlery: !state.basket.cutlery),
+          basket: state.basket.copyWith(
+            isCutlerySelected: !state.basket.isCutlerySelected,
+          ),
         ),
       );
     }

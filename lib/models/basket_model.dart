@@ -3,40 +3,34 @@ import 'product_model.dart';
 
 import 'models.dart';
 
+const int DELIVERY_FEE = 5;
+
 class Basket extends Equatable {
   final List<Product> products;
-  final bool cutlery;
+  final bool isCutlerySelected;
   final Voucher? voucher;
   final DeliveryTime? deliveryTime;
 
   Basket({
     this.products = const <Product>[],
-    this.cutlery = false,
+    this.isCutlerySelected = false,
     this.voucher,
     this.deliveryTime,
   });
 
   Basket copyWith({
     List<Product>? products,
-    bool? cutlery,
+    bool? isCutlerySelected,
     Voucher? voucher,
     DeliveryTime? deliveryTime,
   }) {
     return Basket(
       products: products ?? this.products,
-      cutlery: cutlery ?? this.cutlery,
+      isCutlerySelected: isCutlerySelected ?? this.isCutlerySelected,
       voucher: voucher ?? this.voucher,
       deliveryTime: deliveryTime ?? this.deliveryTime,
     );
   }
-
-  @override
-  List<Object?> get props => [
-        products,
-        cutlery,
-        voucher,
-        deliveryTime,
-      ];
 
   Map itemQuantity(products) {
     var quantity = Map();
@@ -55,10 +49,15 @@ class Basket extends Equatable {
       products.fold(0, (total, current) => total + current.price);
 
   double total(subtotal) {
-    return (voucher == null) ? subtotal + 5 : subtotal + 5 - voucher!.value;
+    return (voucher == null)
+        ? subtotal + DELIVERY_FEE
+        : subtotal + DELIVERY_FEE - voucher!.value;
   }
 
   String get subtotalString => subtotal.toStringAsFixed(2);
-
   String get totalString => total(subtotal).toStringAsFixed(2);
+
+  @override
+  List<Object?> get props =>
+      [products, isCutlerySelected, voucher, deliveryTime];
 }
