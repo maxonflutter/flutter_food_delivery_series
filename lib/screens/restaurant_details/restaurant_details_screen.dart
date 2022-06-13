@@ -68,7 +68,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               padding: EdgeInsets.zero,
-              itemCount: restaurant.tags.length,
+              itemCount: restaurant.categories.length,
               itemBuilder: (context, index) {
                 return _buildproducts(restaurant, context, index);
               },
