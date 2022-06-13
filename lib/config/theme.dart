@@ -2,10 +2,22 @@ import 'package:flutter/material.dart';
 
 ThemeData theme() {
   return ThemeData(
-    primaryColor: Color(0xFFFE3C5B),
     scaffoldBackgroundColor: Color(0xFFF5F5F5),
-    accentColor: Color(0xFFe84545),
-    backgroundColor: Color(0xFFFFFFFF),
+    colorScheme: ColorScheme(
+      primary: Color(0xFFFE3C5B),
+      primaryVariant: Color(0xFFFE3C5B),
+      secondary: Color(0xFFe84545),
+      secondaryVariant: Color(0xFFe84545),
+      background: Color(0xFFFFFFFF),
+      surface: Color(0xFFFFFFFF),
+      error: Color(0x000000),
+      brightness: Brightness.light,
+      onPrimary: Color(0xFFFFFFFF),
+      onSecondary: Color(0xFFFFFFFF),
+      onError: Color(0xFF2b2e4a),
+      onBackground: Color(0xFF2b2e4a),
+      onSurface: Color(0xFF2b2e4a),
+    ),
     fontFamily: 'Futura',
     textTheme: TextTheme(
       headline1: TextStyle(

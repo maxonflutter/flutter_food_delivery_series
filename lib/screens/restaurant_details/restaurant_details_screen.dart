@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../blocs/basket/basket_bloc.dart';
+import '../../models/models.dart';
+import '../../widgets/widgets.dart';
 
 import '../../models/models.dart';
 import '../../widgets/widgets.dart';
@@ -15,106 +19,140 @@ class RestaurantDetailsScreen extends StatelessWidget {
 
   final Restaurant restaurant;
 
-  const RestaurantDetailsScreen({
-    required this.restaurant,
-  });
+  const RestaurantDetailsScreen({required this.restaurant});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      bottomNavigationBar: CustomBottomAppBar(text: 'Basket'),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                shape: RoundedRectangleBorder(),
+                primary: Theme.of(context).colorScheme.secondary,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/basket');
+              },
+              child: Text('Basket'),
+            ),
+          ],
+        )),
+      ),
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 250,
+              height: 200,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(
                   bottom:
                       Radius.elliptical(MediaQuery.of(context).size.width, 50),
                 ),
                 image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                    restaurant.imageUrl,
-                  ),
-                ),
+                    image: NetworkImage(
+                      restaurant.imageUrl,
+                    ),
+                    fit: BoxFit.cover),
               ),
             ),
             RestaurantInformation(restaurant: restaurant),
             ListView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: restaurant.tags.length,
-                itemBuilder: (context, index) {
-                  return _buildMenuItems(restaurant, context, index);
-                })
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemCount: restaurant.categories.length,
+              itemBuilder: (context, index) {
+                return _buildproducts(restaurant, context, index);
+              },
+            ),
+
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMenuItems(
-      Restaurant restaurant, BuildContext context, int index) {
+  Widget _buildproducts(
+    Restaurant restaurant,
+    BuildContext context,
+    int index,
+  ) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ),
           child: Text(
-            restaurant.tags[index],
+            restaurant.categories[index].name,
             style: Theme.of(context).textTheme.headline3!.copyWith(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
           ),
         ),
         Column(
-          children: restaurant.menuItems
-              .where((menuItem) => menuItem.category == restaurant.tags[index])
+          children: restaurant.products
+              .where((product) =>
+                  product.category == restaurant.categories[index].name)
               .map(
-                (menuItem) => Column(
+                (product) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       color: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: ListTile(
                         dense: true,
                         contentPadding: EdgeInsets.zero,
-                        title: Text(menuItem.name,
-                            style: Theme.of(context).textTheme.headline5),
-                        subtitle: Text(menuItem.description,
-                            style: Theme.of(context).textTheme.bodyText1),
+                        title: Text(
+                          product.name,
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
+                        subtitle: Text(
+                          product.description,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                         trailing: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              '\$${menuItem.price}',
+                              '\$${product.price}',
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.add_circle,
-                                color: Theme.of(context).accentColor,
-                              ),
-                              onPressed: () {},
-                            )
+                            BlocBuilder<BasketBloc, BasketState>(
+                              builder: (context, state) {
+                                return IconButton(
+                                  icon: Icon(
+                                    Icons.add_circle,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
+                                  onPressed: () {
+                                    context.read<BasketBloc>()
+                                      ..add(AddProduct(product));
+                                  },
+                                );
+                              },
+                            ),
+
                           ],
                         ),
                       ),
-                    ),
-                    Divider(
-                      height: 2,
                     ),
                   ],
                 ),

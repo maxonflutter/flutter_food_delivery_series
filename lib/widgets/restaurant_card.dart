@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
+import '../models/models.dart';
+
+import 'restaurant_tags.dart';
 
 import 'widgets.dart';
 

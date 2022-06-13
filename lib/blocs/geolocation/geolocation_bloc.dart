@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_food_delivery_app/repositories/geolocation/geolocation_repository.dart';
+import '../../repositories/geolocation/geolocation_repository.dart';
 import 'package:geolocator/geolocator.dart';
 
 part 'geolocation_event.dart';

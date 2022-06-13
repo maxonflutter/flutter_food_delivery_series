@@ -4,13 +4,13 @@ class Price extends Equatable {
   final int id;
   final String price;
 
-  const Price({
+  Price({
     required this.id,
     required this.price,
   });
 
   @override
-  List<Object?> get props => [price];
+  List<Object?> get props => [id, price];
 
   static List<Price> prices = [
     Price(id: 1, price: '\$'),

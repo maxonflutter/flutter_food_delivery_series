@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_food_delivery_app/screens/screens.dart';
+import '../screens/screens.dart';
 
 import '../models/models.dart';
 import '../screens/screens.dart';
@@ -16,12 +16,21 @@ class AppRouter {
         return LocationScreen.route();
       case FilterScreen.routeName:
         return FilterScreen.route();
+      case BasketScreen.routeName:
+        return BasketScreen.route();
+      case VoucherScreen.routeName:
+        return VoucherScreen.route();
+      case DeliveryTimeScreen.routeName:
+        return DeliveryTimeScreen.route();
+      case EditBasketScreen.routeName:
+        return EditBasketScreen.route();
       case RestaurantDetailsScreen.routeName:
         return RestaurantDetailsScreen.route(
             restaurant: settings.arguments as Restaurant);
       case RestaurantListingScreen.routeName:
         return RestaurantListingScreen.route(
             restaurants: settings.arguments as List<Restaurant>);
+
       default:
         return _errorRoute();
     }

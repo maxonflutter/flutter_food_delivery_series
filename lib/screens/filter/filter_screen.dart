@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'widgets/custom_category_filter.dart';
-import 'widgets/custom_price_filter.dart';
-import '../../widgets/widgets.dart';
+import '/blocs/blocs.dart';
+import '/widgets/widgets.dart';
 
 class FilterScreen extends StatelessWidget {
   static const String routeName = '/filters';
@@ -18,11 +17,44 @@ class FilterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: Text('Filter'),
+      appBar: AppBar(title: Text('Filter')),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+            child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BlocBuilder<FilterBloc, FilterState>(
+              builder: (context, state) {
+                if (state is FilterLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is FilterLoaded) {
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      shape: RoundedRectangleBorder(),
+                      primary: Theme.of(context).colorScheme.secondary,
+                    ),
+                    child: Text('Apply'),
+                    onPressed: () {
+                      print(state.filteredRestaurants);
+                      Navigator.pushNamed(
+                        context,
+                        '/restaurant-listing',
+                        arguments: state.filteredRestaurants,
+                      );
+                    },
+                  );
+                } else {
+                  return Text('Something went wrong.');
+                }
+              },
+            ),
+          ],
+        )),
       ),
-      bottomNavigationBar: CustomBottomAppBar(text: 'Done'),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -31,14 +63,14 @@ class FilterScreen extends StatelessWidget {
             Text(
               'Price',
               style: Theme.of(context).textTheme.headline4!.copyWith(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
             ),
-            CustomPriceFilter(prices: Price.prices),
+            CustomPriceFilter(),
             Text(
               'Category',
               style: Theme.of(context).textTheme.headline4!.copyWith(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
             ),
             CustomCategoryFilter(),

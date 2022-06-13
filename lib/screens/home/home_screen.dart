@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
-import 'package:flutter_food_delivery_app/models/promo_model.dart';
-import 'package:flutter_food_delivery_app/widgets/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../models/models.dart';
+import '../../models/promo_model.dart';
+import '../../widgets/widgets.dart';
+
+import '../../blocs/restaurants/restaurants_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/';
@@ -60,17 +63,31 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: Restaurant.restaurants.length,
-                itemBuilder: (context, index) {
-                  return RestaurantCard(
-                    restaurant: Restaurant.restaurants[index],
+            BlocBuilder<RestaurantsBloc, RestaurantsState>(
+              builder: (context, state) {
+                if (state is RestaurantsLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              ),
+                }
+                if (state is RestaurantsLoaded) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.restaurants.length,
+                      itemBuilder: (context, index) {
+                        return RestaurantCard(
+                          restaurant: state.restaurants[index],
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return Text('Something went wrong');
+                }
+              },
             ),
           ],
         ),

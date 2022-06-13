@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../blocs/restaurants/restaurants_bloc.dart';
+
+import '/models/models.dart';
 
 class CategoryBox extends StatelessWidget {
   final Category category;
@@ -11,21 +14,32 @@ class CategoryBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Restaurant> restaurants = Restaurant.restaurants
-        .where((restaurant) => restaurant.tags.contains(category.name))
+    List<Restaurant> restaurants = context.select((RestaurantsBloc bloc) {
+      if (bloc.state is RestaurantsLoaded) {
+        return (bloc.state as RestaurantsLoaded).restaurants;
+      } else {
+        return <Restaurant>[];
+      }
+    });
+
+    final List<Restaurant> filteredRestaurants = restaurants
+        .where((restaurant) => restaurant.categories.contains(category))
         .toList();
 
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/restaurant-listing',
-            arguments: restaurants);
+        Navigator.pushNamed(
+          context,
+          '/restaurant-listing',
+          arguments: filteredRestaurants,
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(right: 5.0),
         width: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.secondary,
         ),
         child: Stack(
           children: [
@@ -44,7 +58,7 @@ class CategoryBox extends StatelessWidget {
             Positioned(
               top: 5,
               left: 7.5,
-              child: category.image,
+              child: Image.asset(category.imageUrl),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

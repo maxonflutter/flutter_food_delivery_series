@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_food_delivery_app/models/promo_model.dart';
+import '../models/promo_model.dart';
 
 class PromoBox extends StatelessWidget {
   final Promo promo;
@@ -17,7 +17,7 @@ class PromoBox extends StatelessWidget {
           margin: const EdgeInsets.only(right: 5.0),
           width: MediaQuery.of(context).size.width - 40,
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(5.0),
             image: DecorationImage(
                 image: NetworkImage(
@@ -32,7 +32,7 @@ class PromoBox extends StatelessWidget {
             margin: const EdgeInsets.only(right: 5.0),
             width: MediaQuery.of(context).size.width - 40,
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.secondary,
               borderRadius: BorderRadius.circular(5.0),
             ),
             child: Padding(

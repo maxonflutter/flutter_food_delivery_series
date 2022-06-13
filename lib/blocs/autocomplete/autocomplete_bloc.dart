@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_food_delivery_app/models/place_autocomplete_model.dart';
-import 'package:flutter_food_delivery_app/repositories/places/places_repository.dart';
+import '../../models/place_autocomplete_model.dart';
+import '../../repositories/places/places_repository.dart';
 
 part 'autocomplete_event.dart';
 part 'autocomplete_state.dart';

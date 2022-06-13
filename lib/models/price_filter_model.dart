@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
-import 'models.dart';
+import 'Price_model.dart';
 
 class PriceFilter extends Equatable {
   final int id;
   final Price price;
   final bool value;
 
-  const PriceFilter({
+  PriceFilter({
     required this.id,
     required this.price,
     required this.value,
@@ -25,15 +25,17 @@ class PriceFilter extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, price, value];
+  List<Object?> get props => [
+        id,
+        price,
+        value,
+      ];
 
   static List<PriceFilter> filters = Price.prices
-      .map(
-        (price) => PriceFilter(
-          id: price.id,
-          price: price,
-          value: false,
-        ),
-      )
+      .map((price) => PriceFilter(
+            id: price.id,
+            price: price,
+            value: false,
+          ))
       .toList();
 }

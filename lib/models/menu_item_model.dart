@@ -8,7 +8,7 @@ class MenuItem extends Equatable {
   final String description;
   final double price;
 
-  MenuItem({
+  const MenuItem({
     required this.id,
     required this.restaurantId,
     required this.name,

@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/autocomplete/autocomplete_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/filter/filter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/geolocation/geolocation_bloc.dart';
-import 'package:flutter_food_delivery_app/repositories/geolocation/geolocation_repository.dart';
-import 'package:flutter_food_delivery_app/repositories/places/places_repository.dart';
-import 'package:flutter_food_delivery_app/screens/screens.dart';
 
-import 'blocs/place/place_bloc.dart';
+
+import 'blocs/blocs.dart';
+import 'repositories/repositories.dart';
 import 'config/theme.dart';
 import 'config/app_router.dart';
-import 'screens/home/home_screen.dart';
+
 import 'screens/screens.dart';
 import 'simple_bloc_observer.dart';
 
 void main() async {
-  Bloc.observer = SimpleBlocObserver();
-
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  BlocOverrides.runZoned(
+    () {
+      runApp(MyApp());
+    },
+    blocObserver: SimpleBlocObserver(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -31,9 +33,17 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<PlacesRepository>(
           create: (_) => PlacesRepository(),
         ),
+        RepositoryProvider<RestaurantRepository>(
+          create: (_) => RestaurantRepository(),
+        )
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(
+            create: (context) => RestaurantsBloc(
+              restaurantRepository: context.read<RestaurantRepository>(),
+            ),
+          ),
           BlocProvider(
               create: (context) => GeolocationBloc(
                   geolocationRepository: context.read<GeolocationRepository>())
@@ -45,7 +55,25 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) => PlaceBloc(
                   placesRepository: context.read<PlacesRepository>())),
-          BlocProvider(create: (context) => FilterBloc()..add(FilterLoad())),
+          BlocProvider(
+            create: (context) => FilterBloc(
+              restaurantsBloc: context.read<RestaurantsBloc>(),
+            )..add(LoadFilter()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                VoucherBloc(voucherRepository: VoucherRepository())
+                  ..add(
+                    LoadVouchers(),
+                  ),
+          ),
+          BlocProvider(
+            create: (context) =>
+                BasketBloc(voucherBloc: BlocProvider.of<VoucherBloc>(context))
+                  ..add(
+                    StartBasket(),
+                  ),
+          ),
         ],
         child: MaterialApp(
           title: 'FoodDelivery',

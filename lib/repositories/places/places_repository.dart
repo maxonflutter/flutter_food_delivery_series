@@ -1,6 +1,6 @@
-import 'package:flutter_food_delivery_app/models/place_autocomplete_model.dart';
-import 'package:flutter_food_delivery_app/models/place_model.dart';
-import 'package:flutter_food_delivery_app/repositories/places/base_places_repository.dart';
+import '../../models/place_autocomplete_model.dart';
+import '../../models/place_model.dart';
+import 'base_places_repository.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_food_delivery_app/models/models.dart';
-import 'package:flutter_food_delivery_app/models/price_filter_model.dart';
+
+import 'category_filter_model.dart';
+import 'price_filter_model.dart';
 
 class Filter extends Equatable {
   final List<CategoryFilter> categoryFilters;
@@ -22,5 +23,5 @@ class Filter extends Equatable {
   }
 
   @override
-  List<Object?> get props => [categoryFilters, priceFilters];
+  List<Object?> get props => [priceFilters, categoryFilters];
 }
