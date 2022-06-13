@@ -28,4 +28,5 @@ class UpdatePriceFilter extends FilterEvent {
 
   @override
   List<Object> get props => [priceFilter];
+
 }

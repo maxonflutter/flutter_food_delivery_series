@@ -4,6 +4,9 @@ import '../../blocs/basket/basket_bloc.dart';
 import '../../models/models.dart';
 import '../../widgets/widgets.dart';
 
+import '../../models/models.dart';
+import '../../widgets/widgets.dart';
+
 class RestaurantDetailsScreen extends StatelessWidget {
   static const String routeName = '/restaurant-details';
 
@@ -73,6 +76,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
                 return _buildproducts(restaurant, context, index);
               },
             ),
+
           ],
         ),
       ),
@@ -84,6 +88,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
     BuildContext context,
     int index,
   ) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -144,6 +149,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
                                 );
                               },
                             ),
+
                           ],
                         ),
                       ),

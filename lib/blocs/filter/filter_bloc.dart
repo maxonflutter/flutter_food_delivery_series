@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import '/blocs/blocs.dart';
 import '/models/models.dart';
 
+
 part 'filter_event.dart';
 part 'filter_state.dart';
 
@@ -27,6 +28,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
           categoryFilters: CategoryFilter.filters,
           priceFilters: PriceFilter.filters,
         ),
+
       ),
     );
   }
@@ -36,6 +38,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     Emitter<FilterState> emit,
   ) async {
     final state = this.state;
+
     if (state is FilterLoaded) {
       final List<CategoryFilter> updatedCategoryFilters =
           state.filter.categoryFilters.map((categoryFilter) {
@@ -66,6 +69,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
             priceFilters: state.filter.priceFilters,
           ),
           filteredRestaurants: filteredRestaurants,
+
         ),
       );
     }
@@ -76,6 +80,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
     Emitter<FilterState> emit,
   ) async {
     final state = this.state;
+
     if (state is FilterLoaded) {
       final List<PriceFilter> updatedPriceFilters =
           state.filter.priceFilters.map((priceFilter) {
@@ -106,6 +111,7 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
             priceFilters: updatedPriceFilters,
           ),
           filteredRestaurants: filteredRestaurants,
+
         ),
       );
     }
@@ -129,4 +135,5 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
         )
         .toList();
   }
+
 }

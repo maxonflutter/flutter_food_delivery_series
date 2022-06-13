@@ -3,6 +3,8 @@ import '../models/models.dart';
 
 import 'restaurant_tags.dart';
 
+import 'widgets.dart';
+
 class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;
 

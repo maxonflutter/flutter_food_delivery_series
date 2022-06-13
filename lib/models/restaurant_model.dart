@@ -6,6 +6,8 @@ import 'category_model.dart';
 import 'opening_hours_model.dart';
 import 'product_model.dart';
 
+import 'menu_item_model.dart';
+
 class Restaurant extends Equatable {
   final String id;
   final String name;
