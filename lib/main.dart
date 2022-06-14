@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 
 import 'blocs/blocs.dart';
+import '/models/models.dart';
 import 'repositories/repositories.dart';
 import 'config/theme.dart';
 import 'config/app_router.dart';
@@ -14,6 +16,9 @@ import 'simple_bloc_observer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await Hive.initFlutter();
+  Hive.registerAdapter(PlaceAdapter());
+
   BlocOverrides.runZoned(
     () {
       runApp(MyApp());
@@ -35,6 +40,9 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<RestaurantRepository>(
           create: (_) => RestaurantRepository(),
+        ),
+        RepositoryProvider<LocalStorageRepository>(
+          create: (_) => LocalStorageRepository(),
         )
       ],
       child: MultiBlocProvider(
@@ -68,6 +76,7 @@ class MyApp extends StatelessWidget {
             create: (context) => LocationBloc(
               geolocationRepository: context.read<GeolocationRepository>(),
               placesRepository: context.read<PlacesRepository>(),
+              localStorageRepository: context.read<LocalStorageRepository>(),
             )..add(LoadMap()),
           ),
         ],
@@ -76,7 +85,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: theme(),
           onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: LocationScreen.routeName,
+          initialRoute: HomeScreen.routeName,
         ),
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_food_delivery_app/blocs/location/location_bloc.dart';
+import 'package:flutter_food_delivery_app/screens/location/location_screen.dart';
 import '../../models/models.dart';
 import '../../models/promo_model.dart';
 import '../../widgets/widgets.dart';
@@ -109,22 +111,40 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         onPressed: () {},
       ),
       centerTitle: false,
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'CURRENT LOCATION',
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  color: Colors.white,
-                ),
-          ),
-          Text(
-            'Singapore, 1 Shenton Way',
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: Colors.white,
-                ),
-          ),
-        ],
+      title: BlocBuilder<LocationBloc, LocationState>(
+        builder: (context, state) {
+          if (state is LocationLoading) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (state is LocationLoaded) {
+            return InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, LocationScreen.routeName);
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'CURRENT LOCATION',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(color: Colors.white),
+                  ),
+                  Text(
+                    state.place.name,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6!
+                        .copyWith(color: Colors.white),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Text('Something went wrong.');
+          }
+        },
       ),
     );
   }
