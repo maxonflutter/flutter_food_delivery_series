@@ -27,6 +27,27 @@ class LocationScreen extends StatelessWidget {
             );
           }
           if (state is LocationLoaded) {
+            Set<Marker> markers = state.restaurants!.map((restaurant) {
+              return Marker(
+                markerId: MarkerId(restaurant.id),
+                infoWindow: InfoWindow(
+                  title: restaurant.name,
+                  snippet: restaurant.description,
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/restaurant-details',
+                      arguments: restaurant,
+                    );
+                  },
+                ),
+                position: LatLng(
+                  restaurant.address.lat,
+                  restaurant.address.lon,
+                ),
+              );
+            }).toSet();
+
             return Stack(
               children: [
                 GoogleMap(
@@ -37,6 +58,7 @@ class LocationScreen extends StatelessWidget {
                           LoadMap(controller: controller),
                         );
                   },
+                  markers: markers,
                   initialCameraPosition: CameraPosition(
                     target: LatLng(
                       state.place.lat,

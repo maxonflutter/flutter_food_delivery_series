@@ -22,11 +22,21 @@ class Place extends Equatable {
   });
 
   factory Place.fromJson(Map<String, dynamic> json) {
-    return Place(
+    if (json.keys.contains('place_id')) {
+      return Place(
         placeId: json['place_id'],
-        name: json['formatted_address'],
+        name: json['name'],
         lat: json['geometry']['location']['lat'],
-        lon: json['geometry']['location']['lng']);
+        lon: json['geometry']['location']['lng'],
+      );
+    } else {
+      return Place(
+        placeId: json['placeId'],
+        name: json['name'],
+        lat: json['lat'],
+        lon: json['lon'],
+      );
+    }
   }
 
   @override

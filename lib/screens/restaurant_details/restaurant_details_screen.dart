@@ -73,7 +73,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               itemCount: restaurant.categories.length,
               itemBuilder: (context, index) {
-                return _buildproducts(restaurant, context, index);
+                return _buildProducts(restaurant, context, index);
               },
             ),
 
@@ -83,7 +83,7 @@ class RestaurantDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildproducts(
+  Widget _buildProducts(
     Restaurant restaurant,
     BuildContext context,
     int index,
