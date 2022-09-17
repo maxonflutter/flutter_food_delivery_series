@@ -32,7 +32,7 @@ class CustomPriceFilter extends StatelessWidget {
 
                       print(state.filter.priceFilters);
                       context.read<FilterBloc>().add(
-                            PriceFilterUpdated(
+                            UpdatePriceFilter(
                               priceFilter: state.filter.priceFilters[price.key]
                                   .copyWith(
                                       value: !state.filter
