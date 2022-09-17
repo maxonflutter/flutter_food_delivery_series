@@ -1,6 +1,7 @@
+import 'package:copy_foodbank/blocs/filter/filter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_food_delivery_app/blocs/filter/filter_bloc.dart';
+import 'package:copy_foodbank/blocs/filter/filter_bloc.dart';
 
 class CustomCategoryFilter extends StatelessWidget {
   const CustomCategoryFilter({
@@ -45,7 +46,7 @@ class CustomCategoryFilter extends StatelessWidget {
                           value: state.filter.categoryFilters[index].value,
                           onChanged: (bool? newValue) {
                             context.read<FilterBloc>().add(
-                                  CategoryFilterUpdated(
+                                  UpdateCategoryFilter(
                                     categoryFilter: state
                                         .filter.categoryFilters[index]
                                         .copyWith(
